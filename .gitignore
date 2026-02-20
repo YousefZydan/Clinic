@@ -1,0 +1,13 @@
+# Ignore appsettings
+appsettings.json
+appsettings.Development.json
+
+# Or any environment configs
+appsettings.*.json
+
+
+bin/
+obj/
+.vs/
+*.user
+*.suo
