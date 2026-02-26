@@ -10,7 +10,7 @@ namespace Domain.Entities
         public DateTime DateOfBirth { get; set; }
         public Gender Gender { get; set; }
         public string? PhotoUrl { get; set; }
-
+        public string? PhotoPublicId { get; set; }
 
 
         public List<Doctor> Doctors { get; set; } = new();

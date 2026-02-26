@@ -34,7 +34,8 @@ namespace Infrastructure.Migrations
                     Nickname = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DateOfBirth = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Gender = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PhotoUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PhotoUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PhotoPublicId = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -69,6 +70,21 @@ namespace Infrastructure.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Categories", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ResetCodes",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Code = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ExpireAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ResetCodes", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -178,6 +194,54 @@ namespace Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Notifications",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Message = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IsRead = table.Column<bool>(type: "bit", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ModifiedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Notifications", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Notifications_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Patients",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ModifiedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Patients", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Patients_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Doctors",
                 columns: table => new
                 {
@@ -206,6 +270,86 @@ namespace Infrastructure.Migrations
                         principalTable: "Categories",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "DoctorDetails",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    AboutMe = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PatientsCount = table.Column<int>(type: "int", nullable: false),
+                    YearsOfExperience = table.Column<int>(type: "int", nullable: false),
+                    Rating = table.Column<double>(type: "float", nullable: false),
+                    ReviewsCount = table.Column<int>(type: "int", nullable: false),
+                    DoctorId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ModifiedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DoctorDetails", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_DoctorDetails_Doctors_DoctorId",
+                        column: x => x.DoctorId,
+                        principalTable: "Doctors",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Favourites",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    PatientId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    DoctorId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ModifiedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Favourites", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Favourites_Doctors_DoctorId",
+                        column: x => x.DoctorId,
+                        principalTable: "Doctors",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Favourites_Patients_PatientId",
+                        column: x => x.PatientId,
+                        principalTable: "Patients",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "WorkingTimes",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Day = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    From = table.Column<TimeSpan>(type: "time", nullable: false),
+                    To = table.Column<TimeSpan>(type: "time", nullable: false),
+                    DoctorDetailsId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ModifiedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_WorkingTimes", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_WorkingTimes_DoctorDetails_DoctorDetailsId",
+                        column: x => x.DoctorDetailsId,
+                        principalTable: "DoctorDetails",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -248,6 +392,11 @@ namespace Infrastructure.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_DoctorDetails_DoctorId",
+                table: "DoctorDetails",
+                column: "DoctorId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Doctors_CategoryId",
                 table: "Doctors",
                 column: "CategoryId");
@@ -256,6 +405,31 @@ namespace Infrastructure.Migrations
                 name: "IX_Doctors_UserId",
                 table: "Doctors",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Favourites_DoctorId",
+                table: "Favourites",
+                column: "DoctorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Favourites_PatientId",
+                table: "Favourites",
+                column: "PatientId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Notifications_UserId",
+                table: "Notifications",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Patients_UserId",
+                table: "Patients",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_WorkingTimes_DoctorDetailsId",
+                table: "WorkingTimes",
+                column: "DoctorDetailsId");
         }
 
         /// <inheritdoc />
@@ -277,10 +451,28 @@ namespace Infrastructure.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Doctors");
+                name: "Favourites");
+
+            migrationBuilder.DropTable(
+                name: "Notifications");
+
+            migrationBuilder.DropTable(
+                name: "ResetCodes");
+
+            migrationBuilder.DropTable(
+                name: "WorkingTimes");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "Patients");
+
+            migrationBuilder.DropTable(
+                name: "DoctorDetails");
+
+            migrationBuilder.DropTable(
+                name: "Doctors");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

@@ -1,5 +1,6 @@
 ﻿using Application.Dtos;
 using Application.Interfaces;
+using Domain.Entities;
 using Infrastructure.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -18,7 +19,7 @@ namespace API.Controllers
             _service = service;
         }
 
-        [HttpPost]
+        [HttpPost("AddToFav")]
         public async Task<IActionResult> AddToFav([FromBody] FavouriteCreateDto input)
         {
             if (!ModelState.IsValid)
@@ -37,10 +38,10 @@ namespace API.Controllers
         }
 
 
-        [HttpGet("user")]
+        [HttpGet("GetFavourites")]
         public async Task<IActionResult> GetUserFavourites()
         {
-            string userId = User.GetUserId();
+            string userId = User.GetUserId()!;
 
             if (string.IsNullOrEmpty(userId))
                 return Unauthorized("User not found");
@@ -58,7 +59,12 @@ namespace API.Controllers
         [HttpDelete("{id:guid}")]
         public async Task<IActionResult> Remove(Guid id)
         {
-            var result = await _service.RemoveFromFav(id);
+            string userId = User.GetUserId()!;
+
+            if (string.IsNullOrEmpty(userId))
+                return Unauthorized("User not found");
+
+            var result = await _service.RemoveFromFav(id,userId);
 
             if (!result.Succeeded)
                 return NotFound(result.Error);

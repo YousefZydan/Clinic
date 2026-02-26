@@ -5,32 +5,30 @@
 namespace Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class dd : Migration
+    public partial class AppointmentsConfigMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AlterColumn<string>(
-                name: "PhotoUrl",
-                table: "AspNetUsers",
+                name: "Status",
+                table: "Appointments",
                 type: "nvarchar(max)",
-                nullable: true,
-                oldClrType: typeof(string),
-                oldType: "nvarchar(max)");
+                nullable: false,
+                oldClrType: typeof(int),
+                oldType: "int");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AlterColumn<string>(
-                name: "PhotoUrl",
-                table: "AspNetUsers",
-                type: "nvarchar(max)",
+            migrationBuilder.AlterColumn<int>(
+                name: "Status",
+                table: "Appointments",
+                type: "int",
                 nullable: false,
-                defaultValue: "",
                 oldClrType: typeof(string),
-                oldType: "nvarchar(max)",
-                oldNullable: true);
+                oldType: "nvarchar(max)");
         }
     }
 }

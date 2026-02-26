@@ -2,12 +2,12 @@
 
 namespace Domain.Premitives
 {
-    public class Base
+    public class Base<T>
     {
         protected Base() { }
 
         [Key]
-        public Guid Id { get; set; }
+        public T Id { get; set; }
 
     }
 }

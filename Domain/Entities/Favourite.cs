@@ -2,17 +2,17 @@
 
 namespace Domain.Entities
 {
-    public class Favourite : Audited
+    public class Favourite : Audited<Guid>
     {
         private Favourite() { }
-        public Favourite(Guid? patientId, Guid doctorId)
+        public Favourite(string? patientId, Guid doctorId)
         {
-            PatientId = patientId;
+            UserId = patientId;
             DoctorId = doctorId;
         }
         
-        public Guid? PatientId { get; set; }
-        public Patient? Patient { get; set; }
+        public string? UserId { get; set; }
+        public User? User { get; set; }
         public Guid DoctorId { get; set; }
         public Doctor? Doctor { get; set; }
     }

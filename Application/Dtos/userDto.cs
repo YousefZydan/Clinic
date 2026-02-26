@@ -1,4 +1,6 @@
-﻿namespace Application.Dtos
+﻿using Domain.Enums;
+
+namespace Application.Dtos
 {
     public class userDto
     {
@@ -14,5 +16,6 @@
 
     }
 }
+
 
 

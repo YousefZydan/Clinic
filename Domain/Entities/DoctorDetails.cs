@@ -1,7 +1,8 @@
 ﻿using Domain.Entities;
 using Domain.Premitives;
+using System.ComponentModel.DataAnnotations.Schema;
 
-public class DoctorDetails : Audited
+public class DoctorDetails : Audited<Guid>
 {
     public string AboutMe { get; set; } = string.Empty;
 
@@ -12,6 +13,7 @@ public class DoctorDetails : Audited
     public double Rating { get; set; }
 
     public int ReviewsCount { get; set; }
+    [ForeignKey("Doctor")]
 
     public Guid DoctorId { get; set; }
 

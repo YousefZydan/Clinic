@@ -2,7 +2,7 @@
 
 namespace Domain.Entities
 {
-    public class Notification : Audited
+    public class Notification : Audited<Guid>
     {
         private Notification() { }
         public Notification(string userId, string title, string message)

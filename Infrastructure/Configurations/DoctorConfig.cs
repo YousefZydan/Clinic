@@ -1,6 +1,7 @@
 ﻿using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using System.Reflection.Emit;
 
 namespace Infrastructure.Configurations
 {
@@ -19,6 +20,9 @@ namespace Infrastructure.Configurations
                 .OnDelete(DeleteBehavior.Restrict)
                 .IsRequired();
 
+
+            builder.HasIndex(d => d.Code)
+            .IsUnique();
 
 
         }

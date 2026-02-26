@@ -3,7 +3,7 @@
 
 namespace Domain.Entities
 {
-    public class Doctor : Audited
+    public class Doctor : Audited<Guid>
     {
         private Doctor()
         {
@@ -12,6 +12,8 @@ namespace Domain.Entities
 
         public string Name { get;private set; }
         public string About { get;private set; }
+        public bool IsFav { get; set; }
+        public string? Code { get; private set; }
 
         public Doctor(string name,string about,string userId,Guid categoryId)
         {

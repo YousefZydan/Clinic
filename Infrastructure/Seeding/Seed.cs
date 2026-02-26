@@ -38,6 +38,7 @@ namespace Infrastructure.Data
 
                 var doctors = categories.Select((cat, index) =>
                     new Doctor(
+                        
                         name: $"Dr. {users[index+1].Name}",
                         about: $"Experienced in {cat.Name} treatments.",
                         userId: users[index+1].Id,

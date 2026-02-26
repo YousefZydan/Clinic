@@ -3,28 +3,48 @@ using Application.Helpers;
 using Application.Interfaces;
 using Application.Repository;
 using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Domain.Entities;
-using Microsoft.AspNetCore.Mvc;
+using Infrastructure.Data;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Services
 {
-    public class FavouriteService(IMapper _mapping,IGenericRepository<Favourite> _repo,IGenericRepository<Patient>_PatientRepo) : IFavouriteService
+    public class FavouriteService(IMapper _mapping, IGenericRepository<Favourite> _repo, UserManager<User> _user, ApplicationDbContext _context) : IFavouriteService
     {
-        public async Task<Result<string>> AddToFav(FavouriteCreateDto input,string userId)
+        public async Task<Result<string>> AddToFav(FavouriteCreateDto input, string userId)
         {
-            var patient = await _PatientRepo.GetByAsync(x => x.User.Id == userId);
-            if(patient is null)
-                return Result<string>.Fail("Patient not found");
-            
+            var user = await _user.FindByIdAsync(userId);
+            if (user is null)
+                return Result<string>.Fail("User not found");
+
 
             var newRec = _mapping.Map<FavouriteCreateDto, Favourite>(input);
-            
-            newRec.PatientId = patient.First().Id;
+
+            newRec.UserId = user.Id;
+
+            if (_context.Favourites.Any(x => x.UserId == user.Id && x.DoctorId == input.DoctorId))
+                return Result<string>.Fail("Doctor already in favourites");
 
             try
             {
-                await _repo.CreateAsync(newRec);
-                return Result<string>.Success("Added to favourites successfully");
+
+                var x = await _repo.CreateAsync(newRec);
+                if (x.Succeeded)
+                {
+                    var doctor = await _context.Doctors.FirstOrDefaultAsync(x => x.Id == input.DoctorId);
+                    if (doctor == null)
+                        return Result<string>.Fail("Doctor not found");
+
+                    doctor.IsFav = true;
+                    await _context.SaveChangesAsync();
+                    return Result<string>.Success("Added to favourites successfully");
+                }
+                else
+                {
+                    return Result<string>.Fail(x.Error ?? "Failed to add to favourites");
+                }
             }
             catch (Exception ex)
             {
@@ -36,21 +56,44 @@ namespace Infrastructure.Services
 
         public async Task<List<FavouriteDto>> GetUserFavourites(string UserId)
         {
-          var records =  await _repo.GetByAsync(x => x.Patient!.User.Id == UserId);
-          return _mapping.Map<List<Favourite>, List<FavouriteDto>>(records);
-          
+            var records = _context.Favourites.Where(x => x.UserId == UserId);
+
+            return await records.ProjectTo<FavouriteDto>(_mapping.ConfigurationProvider)
+                               .ToListAsync();
+
         }
 
-        public async Task<Result<string>> RemoveFromFav(Guid Id)
+        public async Task<Result<string>> RemoveFromFav(Guid doctorId, string userId)
         {
-            var record = await _repo.FindByIdAsync(Id);
+            var record = await _context.Favourites.FirstOrDefaultAsync(x => x.DoctorId == doctorId && x.UserId == userId);
             if (record == null)
             {
                 return Result<string>.Fail("Favourite record not found");
             }
-          return await _repo.DeleteAsync(record);
+
+            var x = await _repo.DeleteAsync(record);
+
+            if (x.Succeeded)
+            {
+                var doctor = await _context.Doctors.FirstOrDefaultAsync(x => x.Id == doctorId);
+                if (doctor == null)
+                    return Result<string>.Fail("Doctor not found");
+
+                var isFav = await _context.Favourites.AnyAsync(x => x.DoctorId == doctorId);
+                if (!isFav)
+                {
+                    doctor.IsFav = false;
+                    await _context.SaveChangesAsync();
+                }
+                return Result<string>.Success("Removed from favourites successfully");
+
+            }
+            return Result<string>.Fail("Failed to remove from favourites");
+
         }
     }
 }
+
+
 
 

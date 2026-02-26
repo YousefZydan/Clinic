@@ -3,6 +3,7 @@ using Application.Interfaces;
 using Infrastructure.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 
 
@@ -23,9 +24,6 @@ namespace Clinic.Controllers
 
         }
 
-        
-
-
 
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginDto input)
@@ -41,7 +39,7 @@ namespace Clinic.Controllers
 
 
 
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         [HttpPost("add-to-role")]
         public async Task<IActionResult> UpdateRolesDto([FromBody] UpdateRolesDto input)
         {
@@ -87,7 +85,7 @@ namespace Clinic.Controllers
 
 
 
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         [HttpGet("GetUserRoles/{userId}")]
         public async Task<IActionResult> GetUserRoles(string userId)
         {
@@ -103,7 +101,7 @@ namespace Clinic.Controllers
 
 
 
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         [HttpPost("UpdateRoles")]
         public async Task<IActionResult> UpdateRoles([FromBody] UpdateRolesDto input)
         {
@@ -114,6 +112,10 @@ namespace Clinic.Controllers
 
             return Ok(result.Data);
         }
+
+
+
+        
 
         [Authorize]
         [HttpGet("profile")]
@@ -131,6 +133,23 @@ namespace Clinic.Controllers
 
             return Ok(profile);
         }
+
+
+        [Authorize]
+        [HttpPut("edit-profile")]
+        public async Task<IActionResult> EditProfile([FromForm] EditProfileDto input)
+        {
+            var userId = User.GetUserId();
+            if (string.IsNullOrEmpty(userId))
+                return Unauthorized("User ID not found in claims.");
+
+            var result = await _accountService.EditProfile(input, userId);
+            if (!result.Succeeded) return BadRequest(result.Error);
+            return Ok(result.Data);
+        }
+
+
+
 
 
 

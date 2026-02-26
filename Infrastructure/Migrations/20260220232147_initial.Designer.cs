@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260201212929_addingDoctorDetails")]
-    partial class addingDoctorDetails
+    [Migration("20260220232147_initial")]
+    partial class initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -42,10 +42,7 @@ namespace Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("DoctorId")
-                        .HasColumnType("int");
-
-                    b.Property<Guid>("DoctorId1")
+                    b.Property<Guid>("DoctorId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime?>("ModifiedAt")
@@ -68,7 +65,7 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("DoctorId1");
+                    b.HasIndex("DoctorId");
 
                     b.ToTable("DoctorDetails");
                 });
@@ -334,6 +331,9 @@ namespace Infrastructure.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
 
+                    b.Property<string>("PhotoPublicId")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("PhotoUrl")
                         .HasColumnType("nvarchar(max)");
 
@@ -377,10 +377,7 @@ namespace Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("DoctorDetailsId")
-                        .HasColumnType("int");
-
-                    b.Property<Guid>("DoctorDetailsId1")
+                    b.Property<Guid>("DoctorDetailsId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<TimeSpan>("From")
@@ -397,7 +394,7 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("DoctorDetailsId1");
+                    b.HasIndex("DoctorDetailsId");
 
                     b.ToTable("WorkingTimes");
                 });
@@ -539,7 +536,7 @@ namespace Infrastructure.Migrations
                 {
                     b.HasOne("Domain.Entities.Doctor", "Doctor")
                         .WithMany("DoctorDetails")
-                        .HasForeignKey("DoctorId1")
+                        .HasForeignKey("DoctorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -608,7 +605,7 @@ namespace Infrastructure.Migrations
                 {
                     b.HasOne("DoctorDetails", "DoctorDetails")
                         .WithMany("WorkingTimes")
-                        .HasForeignKey("DoctorDetailsId1")
+                        .HasForeignKey("DoctorDetailsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

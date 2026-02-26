@@ -2,9 +2,15 @@
 {
     public class FavouriteDto
     {
-        public string? CategoryName { get; private set; }
-        public string? Name { get; private set; }
-        public string? About { get; private set; }
+        public Guid Id { get; set; }
+
+        public string Email { get; set; } = "";
+        public string Phone { get; set; } = "";
+
+        public string? CategoryName { get;  set; }
+        public string? Name { get;  set; }
+        public string? About { get;  set; }
+        public string? PhotoUrl { get; set; }
 
     }
 }

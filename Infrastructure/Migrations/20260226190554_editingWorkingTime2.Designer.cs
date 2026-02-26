@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20251123195806_effe")]
-    partial class effe
+    [Migration("20260226190554_editingWorkingTime2")]
+    partial class editingWorkingTime2
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,51 @@ namespace Infrastructure.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("DoctorDetails", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("AboutMe")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("DoctorId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("ModifiedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ModifiedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("PatientsCount")
+                        .HasColumnType("int");
+
+                    b.Property<double>("Rating")
+                        .HasColumnType("float");
+
+                    b.Property<int>("ReviewsCount")
+                        .HasColumnType("int");
+
+                    b.Property<int>("YearsOfExperience")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DoctorId");
+
+                    b.ToTable("DoctorDetails");
+                });
 
             modelBuilder.Entity("Domain.Entities.Category", b =>
                 {
@@ -66,6 +111,127 @@ namespace Infrastructure.Migrations
                     b.Property<Guid>("CategoryId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsFav")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ModifiedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ModifiedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
+
+                    b.HasIndex("Code")
+                        .IsUnique()
+                        .HasFilter("[Code] IS NOT NULL");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Doctors");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Favourite", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("DoctorId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("ModifiedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ModifiedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DoctorId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Favourites");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Notification", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsRead")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Message")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("ModifiedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ModifiedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Notifications");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Patient", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
@@ -89,11 +255,9 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CategoryId");
-
                     b.HasIndex("UserId");
 
-                    b.ToTable("Doctors");
+                    b.ToTable("Patients");
                 });
 
             modelBuilder.Entity("Domain.Entities.ResetCode", b =>
@@ -177,6 +341,9 @@ namespace Infrastructure.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
 
+                    b.Property<string>("PhotoPublicId")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("PhotoUrl")
                         .HasColumnType("nvarchar(max)");
 
@@ -201,6 +368,54 @@ namespace Infrastructure.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+                });
+
+            modelBuilder.Entity("Domain.Entities.WorkingTime", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("BookStatus")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Day")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("DoctorDetailsId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<TimeSpan>("From")
+                        .HasColumnType("time");
+
+                    b.Property<DateTime?>("ModifiedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ModifiedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("PatientId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<TimeSpan>("To")
+                        .HasColumnType("time");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DoctorDetailsId");
+
+                    b.HasIndex("PatientId");
+
+                    b.ToTable("WorkingTimes");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -336,6 +551,17 @@ namespace Infrastructure.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("DoctorDetails", b =>
+                {
+                    b.HasOne("Domain.Entities.Doctor", "Doctor")
+                        .WithMany("DoctorDetails")
+                        .HasForeignKey("DoctorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Doctor");
+                });
+
             modelBuilder.Entity("Domain.Entities.Doctor", b =>
                 {
                     b.HasOne("Domain.Entities.Category", "Category")
@@ -353,6 +579,62 @@ namespace Infrastructure.Migrations
                     b.Navigation("Category");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Favourite", b =>
+                {
+                    b.HasOne("Domain.Entities.Doctor", "Doctor")
+                        .WithMany()
+                        .HasForeignKey("DoctorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("Doctor");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Notification", b =>
+                {
+                    b.HasOne("Domain.Entities.User", "User")
+                        .WithMany("Notifications")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Patient", b =>
+                {
+                    b.HasOne("Domain.Entities.User", "User")
+                        .WithMany("Patients")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Domain.Entities.WorkingTime", b =>
+                {
+                    b.HasOne("DoctorDetails", "DoctorDetails")
+                        .WithMany("WorkingTimes")
+                        .HasForeignKey("DoctorDetailsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.Patient", "Patient")
+                        .WithMany("Appointments")
+                        .HasForeignKey("PatientId");
+
+                    b.Navigation("DoctorDetails");
+
+                    b.Navigation("Patient");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -406,14 +688,33 @@ namespace Infrastructure.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("DoctorDetails", b =>
+                {
+                    b.Navigation("WorkingTimes");
+                });
+
             modelBuilder.Entity("Domain.Entities.Category", b =>
                 {
                     b.Navigation("Doctors");
                 });
 
+            modelBuilder.Entity("Domain.Entities.Doctor", b =>
+                {
+                    b.Navigation("DoctorDetails");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Patient", b =>
+                {
+                    b.Navigation("Appointments");
+                });
+
             modelBuilder.Entity("Domain.Entities.User", b =>
                 {
                     b.Navigation("Doctors");
+
+                    b.Navigation("Notifications");
+
+                    b.Navigation("Patients");
                 });
 #pragma warning restore 612, 618
         }

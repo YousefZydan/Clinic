@@ -6,7 +6,7 @@ using Domain.Entities;
 using Domain.Enums;
 using Infrastructure.Data;
 using Microsoft.AspNetCore.Identity;
-
+using Microsoft.AspNetCore.Http;
 namespace Infrastructure.Services
 {
     internal class AccountService(UserManager<User> _userManager,
@@ -37,6 +37,7 @@ namespace Infrastructure.Services
                 DateOfBirth = input.DateOfBirth,
                 Gender = input.Gender,
                 PhotoUrl = photo?.Url?.ToString(),
+                PhotoPublicId = photo?.PublicId,
                 PhoneNumber = input.Phone
             };
 
@@ -226,8 +227,62 @@ namespace Infrastructure.Services
 
         }
 
+
+        public async Task<Result<string>> EditProfile(EditProfileDto input, string userId)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user == null) return Result<string>.Fail("User not found");
+
+
+            var existingUser = await _userManager.FindByEmailAsync(input.Email);
+
+            if (existingUser != null && existingUser.Id != userId)
+            {
+                return Result<string>.Fail("Email already exists");
+            }
+
+            var existing = await _userManager.FindByNameAsync(input.UserName);
+
+            if (existing != null && existing.Id != userId)
+            {
+                return Result<string>.Fail("Username already exists");
+            }
+
+            if (input.Photo != null)
+            {
+                if (!string.IsNullOrEmpty(user.PhotoPublicId))
+                {
+                    await _photo.DeletePhotoAsync(user.PhotoPublicId);
+                }
+
+                var photoResult = await _photo.AddPhotoAsync(input.Photo);
+
+                if (photoResult.Error != null)
+                    return Result<string>.Fail("Photo upload failed");
+
+                user.PhotoUrl = photoResult.SecureUrl.AbsoluteUri;
+                user.PhotoPublicId = photoResult.PublicId;
+            }
+
+            user.UserName = input.UserName;
+            user.Email = input.Email;
+            user.Name = input.Name;
+            user.Nickname = input.Nickname;
+            user.DateOfBirth = input.DateOfBirth;
+            user.Gender = input.Gender;
+            user.PhoneNumber = input.PhoneNumber;
+
+            var result = await _userManager.UpdateAsync(user);
+            if (!result.Succeeded)
+            {
+                var errors = string.Join(" | ", result.Errors.Select(e => e.Description));
+                return Result<string>.Fail(errors);
+            }
+            return Result<string>.Success("Profile updated successfully");
+        }
     }
 }
+
 
 
 

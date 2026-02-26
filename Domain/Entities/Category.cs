@@ -2,7 +2,7 @@
 
 namespace Domain.Entities
 {
-    public class Category : Audited
+    public class Category : Audited<Guid>
     {
         private Category()
         {

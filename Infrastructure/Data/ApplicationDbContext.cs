@@ -29,7 +29,7 @@ namespace Infrastructure.Data
         public DbSet<Notification> Notifications { get; set; }
         public DbSet<DoctorDetails> DoctorDetails { get; set; }
         public DbSet<WorkingTime> WorkingTimes { get; set; }
-
+        //public DbSet<Appointment> Appointments { get; set; }
 
         
 
@@ -68,12 +68,12 @@ namespace Infrastructure.Data
             var username = _httpContextAccessor.HttpContext?.User?.FindFirstValue(ClaimTypes.Name) ?? "System";
 
             var entries = ChangeTracker.Entries()
-                .Where(e => e.Entity is Audited &&
+                .Where(e => e.Entity is Audited<Guid> &&
                             (e.State == EntityState.Added || e.State == EntityState.Modified));
 
             foreach (var entry in entries)
             {
-                var entity = (Audited)entry.Entity;
+                var entity = (Audited<Guid>)entry.Entity;
 
                 if (entry.State == EntityState.Added)
                 {

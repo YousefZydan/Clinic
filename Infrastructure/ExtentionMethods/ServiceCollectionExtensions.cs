@@ -1,6 +1,7 @@
 ﻿using Application.AutoMapper;
 using Application.Helpers;
 using Application.Interfaces;
+using Application.Interfaces.Dashboard;
 using Application.Repository;
 using Application.Validators;
 using Domain.Entities;
@@ -9,6 +10,7 @@ using FluentValidation.AspNetCore;
 using Infrastructure.Data;
 using Infrastructure.Repositories;
 using Infrastructure.Services;
+using Infrastructure.Services.Dashboard;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -43,6 +45,9 @@ namespace MyProject.Infrastructure.Extensions
             services.AddScoped<IDoctorServices, DoctorService>();
             services.AddScoped<IFavouriteService, FavouriteService>();
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+            services.AddScoped<IDashboardDoctorService, DashboardDoctorService>();
+            services.AddScoped<IBookingService, BookingService>();
+
 
             services.AddScoped<IJwt, Jwt>();
 

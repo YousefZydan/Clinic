@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260203011346_editDoctorsDetails")]
-    partial class editDoctorsDetails
+    [Migration("20260225142913_addCodeOfDoctors")]
+    partial class addCodeOfDoctors
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,47 @@ namespace Infrastructure.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("Appointment", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("DoctorId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("ModifiedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ModifiedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("PatientId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("ScheduledAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DoctorId");
+
+                    b.HasIndex("PatientId");
+
+                    b.ToTable("Appointments");
+                });
 
             modelBuilder.Entity("DoctorDetails", b =>
                 {
@@ -111,12 +152,18 @@ namespace Infrastructure.Migrations
                     b.Property<Guid>("CategoryId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("CreatedBy")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsFav")
+                        .HasColumnType("bit");
 
                     b.Property<DateTime?>("ModifiedAt")
                         .HasColumnType("datetime2");
@@ -135,6 +182,10 @@ namespace Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
+
+                    b.HasIndex("Code")
+                        .IsUnique()
+                        .HasFilter("[Code] IS NOT NULL");
 
                     b.HasIndex("UserId");
 
@@ -163,14 +214,14 @@ namespace Infrastructure.Migrations
                     b.Property<string>("ModifiedBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("PatientId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("DoctorId");
 
-                    b.HasIndex("PatientId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Favourites");
                 });
@@ -330,6 +381,9 @@ namespace Infrastructure.Migrations
 
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
+
+                    b.Property<string>("PhotoPublicId")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhotoUrl")
                         .HasColumnType("nvarchar(max)");
@@ -529,6 +583,25 @@ namespace Infrastructure.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("Appointment", b =>
+                {
+                    b.HasOne("Domain.Entities.Doctor", "Doctor")
+                        .WithMany()
+                        .HasForeignKey("DoctorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.Patient", "Patient")
+                        .WithMany()
+                        .HasForeignKey("PatientId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Doctor");
+
+                    b.Navigation("Patient");
+                });
+
             modelBuilder.Entity("DoctorDetails", b =>
                 {
                     b.HasOne("Domain.Entities.Doctor", "Doctor")
@@ -567,13 +640,13 @@ namespace Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Domain.Entities.Patient", "Patient")
+                    b.HasOne("Domain.Entities.User", "User")
                         .WithMany()
-                        .HasForeignKey("PatientId");
+                        .HasForeignKey("UserId");
 
                     b.Navigation("Doctor");
 
-                    b.Navigation("Patient");
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Domain.Entities.Notification", b =>

@@ -10,7 +10,6 @@ namespace API.Controllers
     {
 
         [HttpGet("by-category/{categoryId:guid}")]
-
         public async Task<IActionResult> GetDoctorsByCategoryId(Guid categoryId)
         {
             var doctors = await _doctorService.GetDoctorByCategoryId(categoryId);
@@ -19,7 +18,6 @@ namespace API.Controllers
 
             return Ok(doctors);  
         }
-
 
         [HttpGet("by-CategoryName/{categoryName}")]
         public async Task<IActionResult> GetDoctorsByCategoryName(string categoryName)
@@ -31,7 +29,6 @@ namespace API.Controllers
             return Ok(doctors);
         }
 
-
         [HttpGet("All")]
         public async Task<IActionResult> GetAllDoctors()
         {
@@ -40,8 +37,6 @@ namespace API.Controllers
             return Ok(doctors);
 
         }
-
-
 
         [HttpGet("by-name")]
         public async Task<IActionResult> GetDoctorsByName([FromQuery] string name)
@@ -55,6 +50,10 @@ namespace API.Controllers
 
             return Ok(doctors);
         }
+
+
+
+
     }
 }
 

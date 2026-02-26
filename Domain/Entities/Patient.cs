@@ -2,7 +2,7 @@
 
 namespace Domain.Entities
 {
-    public class Patient : Audited
+    public class Patient : Audited<Guid>
     {
         private Patient()
         {
@@ -16,6 +16,8 @@ namespace Domain.Entities
         public string Name { get; private set; }
         public string UserId { get; private set; }
         public User User { get; private set; }
+
+        public List<WorkingTime> Appointments { get; set; }
     }
 }
 

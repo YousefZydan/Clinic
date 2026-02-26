@@ -1,6 +1,6 @@
 ﻿namespace Domain.Premitives
 {
-    public class Audited : Base
+    public class Audited<T> : Base<T>
     {
         protected Audited() { }
 

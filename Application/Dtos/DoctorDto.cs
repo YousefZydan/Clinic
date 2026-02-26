@@ -4,7 +4,7 @@
     {
         public Guid Id { get; set; }
         public string? PhotoUrl { get; set; }
-
+        public bool IsFav { get; set; }
         public string Name { get; set; } = "";
         public string About { get; set; } = "";
         public string Email { get; set; } = "";
