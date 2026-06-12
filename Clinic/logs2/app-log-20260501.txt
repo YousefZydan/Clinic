@@ -1,0 +1,94 @@
+2026-05-01 01:57:40.847 +03:00 [INF] User profile is available. Using 'C:\Users\yoyoz\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2026-05-01 01:57:43.903 +03:00 [INF] Executed DbCommand (185ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @__normalizedName_0
+2026-05-01 01:57:44.049 +03:00 [INF] Executed DbCommand (74ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @__normalizedName_0
+2026-05-01 01:57:44.127 +03:00 [INF] Executed DbCommand (71ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @__normalizedName_0
+2026-05-01 01:57:44.208 +03:00 [INF] Executed DbCommand (70ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @__normalizedName_0
+2026-05-01 01:57:44.305 +03:00 [INF] Executed DbCommand (78ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateOfBirth], [a].[Email], [a].[EmailConfirmed], [a].[Gender], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[Name], [a].[Nickname], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[PhotoPublicId], [a].[PhotoUrl], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2026-05-01 01:57:44.436 +03:00 [INF] Executed DbCommand (76ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateOfBirth], [a].[Email], [a].[EmailConfirmed], [a].[Gender], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[Name], [a].[Nickname], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[PhotoPublicId], [a].[PhotoUrl], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2026-05-01 01:57:44.517 +03:00 [INF] Executed DbCommand (75ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateOfBirth], [a].[Email], [a].[EmailConfirmed], [a].[Gender], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[Name], [a].[Nickname], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[PhotoPublicId], [a].[PhotoUrl], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2026-05-01 01:57:44.598 +03:00 [INF] Executed DbCommand (73ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateOfBirth], [a].[Email], [a].[EmailConfirmed], [a].[Gender], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[Name], [a].[Nickname], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[PhotoPublicId], [a].[PhotoUrl], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2026-05-01 01:57:44.688 +03:00 [INF] Executed DbCommand (74ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateOfBirth], [a].[Email], [a].[EmailConfirmed], [a].[Gender], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[Name], [a].[Nickname], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[PhotoPublicId], [a].[PhotoUrl], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2026-05-01 01:57:44.767 +03:00 [INF] Executed DbCommand (73ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateOfBirth], [a].[Email], [a].[EmailConfirmed], [a].[Gender], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[Name], [a].[Nickname], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[PhotoPublicId], [a].[PhotoUrl], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2026-05-01 01:57:44.857 +03:00 [INF] Executed DbCommand (83ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateOfBirth], [a].[Email], [a].[EmailConfirmed], [a].[Gender], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[Name], [a].[Nickname], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[PhotoPublicId], [a].[PhotoUrl], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2026-05-01 01:57:44.938 +03:00 [INF] Executed DbCommand (74ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateOfBirth], [a].[Email], [a].[EmailConfirmed], [a].[Gender], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[Name], [a].[Nickname], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[PhotoPublicId], [a].[PhotoUrl], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2026-05-01 01:57:45.018 +03:00 [INF] Executed DbCommand (73ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateOfBirth], [a].[Email], [a].[EmailConfirmed], [a].[Gender], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[Name], [a].[Nickname], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[PhotoPublicId], [a].[PhotoUrl], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2026-05-01 01:57:45.125 +03:00 [INF] Executed DbCommand (77ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Categories] AS [c]) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2026-05-01 01:57:45.208 +03:00 [INF] Executed DbCommand (73ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Doctors] AS [d]) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2026-05-01 01:57:45.976 +03:00 [INF] Now listening on: https://localhost:7089
+2026-05-01 01:57:45.979 +03:00 [INF] Now listening on: http://localhost:5127
+2026-05-01 01:57:46.068 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-05-01 01:57:46.071 +03:00 [INF] Hosting environment: Development
+2026-05-01 01:57:46.073 +03:00 [INF] Content root path: E:\Projects\Clinic\Clinic
+2026-05-01 01:57:46.648 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7089/ - null null
+2026-05-01 01:57:46.906 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7089/ - 301 null null 270.2867ms
+2026-05-01 01:57:46.917 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7089/index.html - null null
+2026-05-01 01:57:47.012 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7089/index.html - 200 null text/html;charset=utf-8 95.0351ms
+2026-05-01 01:57:47.028 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7089/swagger-ui.css - null null
+2026-05-01 01:57:47.028 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7089/index.css - null null
+2026-05-01 01:57:47.033 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7089/index.js - null null
+2026-05-01 01:57:47.071 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7089/_framework/aspnetcore-browser-refresh.js - null null
+2026-05-01 01:57:47.091 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7089/index.js - 200 null application/javascript;charset=utf-8 58.1059ms
+2026-05-01 01:57:47.033 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7089/swagger-ui-standalone-preset.js - null null
+2026-05-01 01:57:47.029 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7089/swagger-ui-bundle.js - null null
+2026-05-01 01:57:47.079 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7089/_vs/browserLink - null null
+2026-05-01 01:57:47.103 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7089/index.css - 200 152 text/css 74.8416ms
+2026-05-01 01:57:47.112 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7089/_framework/aspnetcore-browser-refresh.js - 200 14917 application/javascript; charset=utf-8 40.8085ms
+2026-05-01 01:57:47.118 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7089/swagger-ui-standalone-preset.js - 200 77352 text/javascript 85.8633ms
+2026-05-01 01:57:47.113 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7089/swagger-ui.css - 200 23647 text/css 84.8144ms
+2026-05-01 01:57:47.165 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7089/swagger-ui-bundle.js - 200 424765 text/javascript 135.945ms
+2026-05-01 01:57:47.220 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7089/_vs/browserLink - 200 null text/javascript; charset=UTF-8 144.3029ms
+2026-05-01 01:57:47.377 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7089/swagger/v1/swagger.json - null null
+2026-05-01 01:57:47.423 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7089/favicon-32x32.png - null null
+2026-05-01 01:57:47.462 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7089/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 84.551ms
+2026-05-01 01:57:47.467 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7089/favicon-32x32.png - 200 628 image/png 44.4411ms

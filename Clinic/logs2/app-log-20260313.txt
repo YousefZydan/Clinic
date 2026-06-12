@@ -1,0 +1,302 @@
+2026-03-13 19:19:06.723 +02:00 [INF] User profile is available. Using 'C:\Users\yoyoz\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2026-03-13 19:19:11.362 +02:00 [INF] Executed DbCommand (266ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @__normalizedName_0
+2026-03-13 19:19:11.898 +02:00 [INF] Executed DbCommand (382ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @__normalizedName_0
+2026-03-13 19:19:11.980 +02:00 [INF] Executed DbCommand (75ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @__normalizedName_0
+2026-03-13 19:19:12.061 +02:00 [INF] Executed DbCommand (74ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @__normalizedName_0
+2026-03-13 19:19:12.162 +02:00 [INF] Executed DbCommand (81ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateOfBirth], [a].[Email], [a].[EmailConfirmed], [a].[Gender], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[Name], [a].[Nickname], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[PhotoPublicId], [a].[PhotoUrl], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2026-03-13 19:19:12.725 +02:00 [INF] Executed DbCommand (499ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateOfBirth], [a].[Email], [a].[EmailConfirmed], [a].[Gender], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[Name], [a].[Nickname], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[PhotoPublicId], [a].[PhotoUrl], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2026-03-13 19:19:13.065 +02:00 [INF] Executed DbCommand (334ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateOfBirth], [a].[Email], [a].[EmailConfirmed], [a].[Gender], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[Name], [a].[Nickname], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[PhotoPublicId], [a].[PhotoUrl], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2026-03-13 19:19:13.158 +02:00 [INF] Executed DbCommand (86ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateOfBirth], [a].[Email], [a].[EmailConfirmed], [a].[Gender], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[Name], [a].[Nickname], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[PhotoPublicId], [a].[PhotoUrl], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2026-03-13 19:19:13.253 +02:00 [INF] Executed DbCommand (89ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateOfBirth], [a].[Email], [a].[EmailConfirmed], [a].[Gender], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[Name], [a].[Nickname], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[PhotoPublicId], [a].[PhotoUrl], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2026-03-13 19:19:13.344 +02:00 [INF] Executed DbCommand (86ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateOfBirth], [a].[Email], [a].[EmailConfirmed], [a].[Gender], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[Name], [a].[Nickname], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[PhotoPublicId], [a].[PhotoUrl], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2026-03-13 19:19:13.427 +02:00 [INF] Executed DbCommand (76ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateOfBirth], [a].[Email], [a].[EmailConfirmed], [a].[Gender], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[Name], [a].[Nickname], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[PhotoPublicId], [a].[PhotoUrl], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2026-03-13 19:19:13.522 +02:00 [INF] Executed DbCommand (88ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateOfBirth], [a].[Email], [a].[EmailConfirmed], [a].[Gender], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[Name], [a].[Nickname], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[PhotoPublicId], [a].[PhotoUrl], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2026-03-13 19:19:13.621 +02:00 [INF] Executed DbCommand (93ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateOfBirth], [a].[Email], [a].[EmailConfirmed], [a].[Gender], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[Name], [a].[Nickname], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[PhotoPublicId], [a].[PhotoUrl], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2026-03-13 19:19:13.737 +02:00 [INF] Executed DbCommand (86ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Categories] AS [c]) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2026-03-13 19:19:13.824 +02:00 [INF] Executed DbCommand (76ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Doctors] AS [d]) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2026-03-13 19:19:16.335 +02:00 [INF] Now listening on: https://localhost:7089
+2026-03-13 19:19:16.337 +02:00 [INF] Now listening on: http://localhost:5127
+2026-03-13 19:19:16.420 +02:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-03-13 19:19:16.422 +02:00 [INF] Hosting environment: Development
+2026-03-13 19:19:16.424 +02:00 [INF] Content root path: E:\Projects\Clinic\Clinic
+2026-03-13 19:19:18.827 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7089/ - null null
+2026-03-13 19:19:19.194 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7089/ - 301 null null 382.0561ms
+2026-03-13 19:19:19.203 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7089/index.html - null null
+2026-03-13 19:19:19.387 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7089/index.html - 200 null text/html;charset=utf-8 183.7432ms
+2026-03-13 19:19:19.405 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7089/swagger-ui.css - null null
+2026-03-13 19:19:19.407 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7089/swagger-ui-bundle.js - null null
+2026-03-13 19:19:19.405 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7089/index.css - null null
+2026-03-13 19:19:19.409 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7089/swagger-ui-standalone-preset.js - null null
+2026-03-13 19:19:19.408 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7089/index.js - null null
+2026-03-13 19:19:19.456 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7089/_vs/browserLink - null null
+2026-03-13 19:19:19.456 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7089/_framework/aspnetcore-browser-refresh.js - null null
+2026-03-13 19:19:19.485 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7089/index.js - 200 null application/javascript;charset=utf-8 77.2692ms
+2026-03-13 19:19:19.514 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7089/_framework/aspnetcore-browser-refresh.js - 200 14917 application/javascript; charset=utf-8 58.2249ms
+2026-03-13 19:19:19.577 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7089/index.css - 200 152 text/css 171.2955ms
+2026-03-13 19:19:19.589 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7089/swagger-ui.css - 200 23647 text/css 183.5233ms
+2026-03-13 19:19:19.590 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7089/swagger-ui-standalone-preset.js - 200 77352 text/javascript 181.3033ms
+2026-03-13 19:19:19.610 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7089/swagger-ui-bundle.js - 200 424765 text/javascript 201.708ms
+2026-03-13 19:19:19.645 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7089/_vs/browserLink - 200 null text/javascript; charset=UTF-8 189.0029ms
+2026-03-13 19:19:19.897 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7089/swagger/v1/swagger.json - null null
+2026-03-13 19:19:19.946 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7089/favicon-32x32.png - null null
+2026-03-13 19:19:19.981 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7089/favicon-32x32.png - 200 628 image/png 35.6357ms
+2026-03-13 19:19:19.982 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7089/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 85.0116ms
+2026-03-13 19:25:59.381 +02:00 [INF] Request starting HTTP/2 POST https://localhost:7089/api/User/login - application/json 60
+2026-03-13 19:26:02.330 +02:00 [INF] Executing endpoint 'Clinic.Controllers.UserController.Login (Clinic)'
+2026-03-13 19:26:02.377 +02:00 [INF] Route matched with {action = "Login", controller = "User"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(Application.Dtos.LoginDto) on controller Clinic.Controllers.UserController (Clinic).
+2026-03-13 19:26:02.586 +02:00 [WRN] You do not have a valid license key for the Lucky Penny software AutoMapper. This is allowed for development and testing scenarios. If you are running in production you are required to have a licensed version. Please visit https://luckypennysoftware.com to obtain a valid license.
+2026-03-13 19:26:03.405 +02:00 [INF] Executed DbCommand (104ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateOfBirth], [a].[Email], [a].[EmailConfirmed], [a].[Gender], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[Name], [a].[Nickname], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[PhotoPublicId], [a].[PhotoUrl], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2026-03-13 19:26:03.545 +02:00 [INF] Executing BadRequestObjectResult, writing value of type 'System.String'.
+2026-03-13 19:26:03.560 +02:00 [INF] Executed action Clinic.Controllers.UserController.Login (Clinic) in 1168.2007ms
+2026-03-13 19:26:03.565 +02:00 [INF] Executed endpoint 'Clinic.Controllers.UserController.Login (Clinic)'
+2026-03-13 19:26:03.574 +02:00 [INF] Request finished HTTP/2 POST https://localhost:7089/api/User/login - 400 null text/plain; charset=utf-8 4193.5336ms
+2026-03-13 19:26:16.374 +02:00 [INF] Request starting HTTP/2 POST https://localhost:7089/api/User/login - application/json 63
+2026-03-13 19:26:16.386 +02:00 [INF] Executing endpoint 'Clinic.Controllers.UserController.Login (Clinic)'
+2026-03-13 19:26:16.390 +02:00 [INF] Route matched with {action = "Login", controller = "User"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(Application.Dtos.LoginDto) on controller Clinic.Controllers.UserController (Clinic).
+2026-03-13 19:26:16.511 +02:00 [INF] Executed DbCommand (99ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateOfBirth], [a].[Email], [a].[EmailConfirmed], [a].[Gender], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[Name], [a].[Nickname], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[PhotoPublicId], [a].[PhotoUrl], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2026-03-13 19:26:16.586 +02:00 [INF] Executing BadRequestObjectResult, writing value of type 'System.String'.
+2026-03-13 19:26:16.592 +02:00 [INF] Executed action Clinic.Controllers.UserController.Login (Clinic) in 196.3837ms
+2026-03-13 19:26:16.596 +02:00 [INF] Executed endpoint 'Clinic.Controllers.UserController.Login (Clinic)'
+2026-03-13 19:26:16.599 +02:00 [INF] Request finished HTTP/2 POST https://localhost:7089/api/User/login - 400 null text/plain; charset=utf-8 225.3256ms
+2026-03-13 19:26:39.984 +02:00 [INF] Request starting HTTP/2 POST https://localhost:7089/api/User/login - application/json 61
+2026-03-13 19:26:39.994 +02:00 [INF] Executing endpoint 'Clinic.Controllers.UserController.Login (Clinic)'
+2026-03-13 19:26:39.996 +02:00 [INF] Route matched with {action = "Login", controller = "User"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(Application.Dtos.LoginDto) on controller Clinic.Controllers.UserController (Clinic).
+2026-03-13 19:26:40.213 +02:00 [INF] Executed DbCommand (198ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateOfBirth], [a].[Email], [a].[EmailConfirmed], [a].[Gender], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[Name], [a].[Nickname], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[PhotoPublicId], [a].[PhotoUrl], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2026-03-13 19:26:40.470 +02:00 [INF] Executed DbCommand (127ms) [Parameters=[@__userId_0='?' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT [a0].[Name]
+FROM [AspNetUserRoles] AS [a]
+INNER JOIN [AspNetRoles] AS [a0] ON [a].[RoleId] = [a0].[Id]
+WHERE [a].[UserId] = @__userId_0
+2026-03-13 19:26:40.573 +02:00 [INF] Executed DbCommand (91ms) [Parameters=[@__userId_0='?' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT [a0].[Name]
+FROM [AspNetUserRoles] AS [a]
+INNER JOIN [AspNetRoles] AS [a0] ON [a].[RoleId] = [a0].[Id]
+WHERE [a].[UserId] = @__userId_0
+2026-03-13 19:26:40.683 +02:00 [INF] Executing OkObjectResult, writing value of type 'Application.Helpers.CurrentUser'.
+2026-03-13 19:26:40.695 +02:00 [INF] Executed action Clinic.Controllers.UserController.Login (Clinic) in 694.1543ms
+2026-03-13 19:26:40.713 +02:00 [INF] Executed endpoint 'Clinic.Controllers.UserController.Login (Clinic)'
+2026-03-13 19:26:40.716 +02:00 [INF] Request finished HTTP/2 POST https://localhost:7089/api/User/login - 200 null application/json; charset=utf-8 731.8805ms
+2026-03-13 19:27:38.606 +02:00 [INF] Request starting HTTP/2 PUT https://localhost:7089/api/Appointment/D58040C1-10BA-4DEE-2CBA-08DE803A3B27 - application/json 53
+2026-03-13 19:27:38.685 +02:00 [INF] Executing endpoint 'API.Controllers.AppointmentController.EditBooking (Clinic)'
+2026-03-13 19:27:38.694 +02:00 [INF] Route matched with {action = "EditBooking", controller = "Appointment"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] EditBooking(System.Guid, Application.Dtos.AppoinmentCreate_EditDto) on controller API.Controllers.AppointmentController (Clinic).
+2026-03-13 19:27:38.721 +02:00 [INF] Executing BadRequestObjectResult, writing value of type 'Microsoft.AspNetCore.Mvc.ValidationProblemDetails'.
+2026-03-13 19:27:38.740 +02:00 [INF] Executed action API.Controllers.AppointmentController.EditBooking (Clinic) in 41.3803ms
+2026-03-13 19:27:38.752 +02:00 [INF] Executed endpoint 'API.Controllers.AppointmentController.EditBooking (Clinic)'
+2026-03-13 19:27:38.755 +02:00 [INF] Request finished HTTP/2 PUT https://localhost:7089/api/Appointment/D58040C1-10BA-4DEE-2CBA-08DE803A3B27 - 400 null application/problem+json; charset=utf-8 149.1598ms
+2026-03-13 19:28:05.766 +02:00 [INF] Request starting HTTP/2 PUT https://localhost:7089/api/Appointment/cancel/D58040C1-10BA-4DEE-2CBA-08DE803A3B27 - null 0
+2026-03-13 19:28:05.779 +02:00 [INF] Executing endpoint 'API.Controllers.AppointmentController.CancelBooking (Clinic)'
+2026-03-13 19:28:05.785 +02:00 [INF] Route matched with {action = "CancelBooking", controller = "Appointment"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] CancelBooking(System.Guid) on controller API.Controllers.AppointmentController (Clinic).
+2026-03-13 19:28:51.982 +02:00 [INF] User profile is available. Using 'C:\Users\yoyoz\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2026-03-13 19:28:54.032 +02:00 [INF] Executed DbCommand (129ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @__normalizedName_0
+2026-03-13 19:28:54.209 +02:00 [INF] Executed DbCommand (94ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @__normalizedName_0
+2026-03-13 19:28:54.289 +02:00 [INF] Executed DbCommand (73ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @__normalizedName_0
+2026-03-13 19:28:54.371 +02:00 [INF] Executed DbCommand (74ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @__normalizedName_0
+2026-03-13 19:28:54.470 +02:00 [INF] Executed DbCommand (75ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateOfBirth], [a].[Email], [a].[EmailConfirmed], [a].[Gender], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[Name], [a].[Nickname], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[PhotoPublicId], [a].[PhotoUrl], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2026-03-13 19:28:54.619 +02:00 [INF] Executed DbCommand (76ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateOfBirth], [a].[Email], [a].[EmailConfirmed], [a].[Gender], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[Name], [a].[Nickname], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[PhotoPublicId], [a].[PhotoUrl], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2026-03-13 19:28:54.710 +02:00 [INF] Executed DbCommand (81ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateOfBirth], [a].[Email], [a].[EmailConfirmed], [a].[Gender], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[Name], [a].[Nickname], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[PhotoPublicId], [a].[PhotoUrl], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2026-03-13 19:28:54.794 +02:00 [INF] Executed DbCommand (76ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateOfBirth], [a].[Email], [a].[EmailConfirmed], [a].[Gender], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[Name], [a].[Nickname], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[PhotoPublicId], [a].[PhotoUrl], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2026-03-13 19:28:54.877 +02:00 [INF] Executed DbCommand (76ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateOfBirth], [a].[Email], [a].[EmailConfirmed], [a].[Gender], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[Name], [a].[Nickname], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[PhotoPublicId], [a].[PhotoUrl], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2026-03-13 19:28:54.964 +02:00 [INF] Executed DbCommand (78ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateOfBirth], [a].[Email], [a].[EmailConfirmed], [a].[Gender], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[Name], [a].[Nickname], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[PhotoPublicId], [a].[PhotoUrl], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2026-03-13 19:28:55.045 +02:00 [INF] Executed DbCommand (72ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateOfBirth], [a].[Email], [a].[EmailConfirmed], [a].[Gender], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[Name], [a].[Nickname], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[PhotoPublicId], [a].[PhotoUrl], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2026-03-13 19:28:55.169 +02:00 [INF] Executed DbCommand (83ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateOfBirth], [a].[Email], [a].[EmailConfirmed], [a].[Gender], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[Name], [a].[Nickname], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[PhotoPublicId], [a].[PhotoUrl], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2026-03-13 19:28:55.253 +02:00 [INF] Executed DbCommand (75ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateOfBirth], [a].[Email], [a].[EmailConfirmed], [a].[Gender], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[Name], [a].[Nickname], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[PhotoPublicId], [a].[PhotoUrl], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2026-03-13 19:28:55.377 +02:00 [INF] Executed DbCommand (82ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Categories] AS [c]) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2026-03-13 19:28:55.466 +02:00 [INF] Executed DbCommand (72ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Doctors] AS [d]) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2026-03-13 19:28:55.931 +02:00 [INF] Now listening on: https://localhost:7089
+2026-03-13 19:28:55.935 +02:00 [INF] Now listening on: http://localhost:5127
+2026-03-13 19:28:56.381 +02:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-03-13 19:28:56.384 +02:00 [INF] Hosting environment: Development
+2026-03-13 19:28:56.387 +02:00 [INF] Content root path: E:\Projects\Clinic\Clinic
+2026-03-13 19:28:56.817 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7089/_vs/browserLink - null null
+2026-03-13 19:28:56.817 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7089/_framework/aspnetcore-browser-refresh.js - null null
+2026-03-13 19:28:56.944 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7089/_framework/aspnetcore-browser-refresh.js - 200 14917 application/javascript; charset=utf-8 137.0165ms
+2026-03-13 19:28:57.022 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7089/_vs/browserLink - 200 null text/javascript; charset=UTF-8 221.6847ms
+2026-03-13 19:28:57.071 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7089/swagger/v1/swagger.json - null null
+2026-03-13 19:28:57.154 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7089/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 82.4937ms
+2026-03-13 19:29:02.601 +02:00 [INF] Request starting HTTP/2 PUT https://localhost:7089/api/Appointment/cancel/D58040C1-10BA-4DEE-2CBA-08DE803A3B27 - null 0
+2026-03-13 19:29:02.764 +02:00 [INF] Executing endpoint 'API.Controllers.AppointmentController.CancelBooking (Clinic)'
+2026-03-13 19:29:02.786 +02:00 [INF] Route matched with {action = "CancelBooking", controller = "Appointment"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] CancelBooking(System.Guid) on controller API.Controllers.AppointmentController (Clinic).
+2026-03-13 19:29:02.931 +02:00 [WRN] You do not have a valid license key for the Lucky Penny software AutoMapper. This is allowed for development and testing scenarios. If you are running in production you are required to have a licensed version. Please visit https://luckypennysoftware.com to obtain a valid license.
+2026-03-13 19:29:03.288 +02:00 [INF] Executed DbCommand (184ms) [Parameters=[@__bookingId_0='?' (DbType = Guid), @__userId_1='?' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[CreatedAt], [a].[CreatedBy], [a].[Date], [a].[DoctorId], [a].[Hour], [a].[ModifiedAt], [a].[ModifiedBy], [a].[Status], [a].[UserId], [d].[Id], [d].[About], [d].[CategoryId], [d].[Code], [d].[CreatedAt], [d].[CreatedBy], [d].[IsFav], [d].[ModifiedAt], [d].[ModifiedBy], [d].[Name], [d].[UserId]
+FROM [Appointments] AS [a]
+INNER JOIN [Doctors] AS [d] ON [a].[DoctorId] = [d].[Id]
+WHERE [a].[Id] = @__bookingId_0 AND [a].[UserId] = @__userId_1
+2026-03-13 19:29:03.303 +02:00 [INF] Executing BadRequestObjectResult, writing value of type 'System.String'.
+2026-03-13 19:29:03.313 +02:00 [INF] Executed action API.Controllers.AppointmentController.CancelBooking (Clinic) in 516.5013ms
+2026-03-13 19:29:03.317 +02:00 [INF] Executed endpoint 'API.Controllers.AppointmentController.CancelBooking (Clinic)'
+2026-03-13 19:29:03.327 +02:00 [INF] Request finished HTTP/2 PUT https://localhost:7089/api/Appointment/cancel/D58040C1-10BA-4DEE-2CBA-08DE803A3B27 - 400 null text/plain; charset=utf-8 726.3523ms
+2026-03-13 19:29:25.847 +02:00 [INF] Request starting HTTP/2 PUT https://localhost:7089/api/Appointment/cancel/D58040C1-10BA-4DEE-2CBA-08DE803A3B27 - null 0
+2026-03-13 19:29:25.862 +02:00 [INF] Executing endpoint 'API.Controllers.AppointmentController.CancelBooking (Clinic)'
+2026-03-13 19:29:25.865 +02:00 [INF] Route matched with {action = "CancelBooking", controller = "Appointment"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] CancelBooking(System.Guid) on controller API.Controllers.AppointmentController (Clinic).
+2026-03-13 19:29:25.959 +02:00 [INF] Executed DbCommand (74ms) [Parameters=[@__bookingId_0='?' (DbType = Guid), @__userId_1='?' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[CreatedAt], [a].[CreatedBy], [a].[Date], [a].[DoctorId], [a].[Hour], [a].[ModifiedAt], [a].[ModifiedBy], [a].[Status], [a].[UserId], [d].[Id], [d].[About], [d].[CategoryId], [d].[Code], [d].[CreatedAt], [d].[CreatedBy], [d].[IsFav], [d].[ModifiedAt], [d].[ModifiedBy], [d].[Name], [d].[UserId]
+FROM [Appointments] AS [a]
+INNER JOIN [Doctors] AS [d] ON [a].[DoctorId] = [d].[Id]
+WHERE [a].[Id] = @__bookingId_0 AND [a].[UserId] = @__userId_1
+2026-03-13 19:29:25.966 +02:00 [INF] Executing BadRequestObjectResult, writing value of type 'System.String'.
+2026-03-13 19:29:25.970 +02:00 [INF] Executed action API.Controllers.AppointmentController.CancelBooking (Clinic) in 100.5831ms
+2026-03-13 19:29:25.973 +02:00 [INF] Executed endpoint 'API.Controllers.AppointmentController.CancelBooking (Clinic)'
+2026-03-13 19:29:25.977 +02:00 [INF] Request finished HTTP/2 PUT https://localhost:7089/api/Appointment/cancel/D58040C1-10BA-4DEE-2CBA-08DE803A3B27 - 400 null text/plain; charset=utf-8 130.843ms
+2026-03-13 19:30:16.853 +02:00 [INF] Request starting HTTP/2 POST https://localhost:7089/api/Appointment/6882E4F1-DC30-4E13-E7D0-08DE70D7049D - application/json 53
+2026-03-13 19:30:16.864 +02:00 [INF] Executing endpoint 'API.Controllers.AppointmentController.AddBooking (Clinic)'
+2026-03-13 19:30:16.871 +02:00 [INF] Route matched with {action = "AddBooking", controller = "Appointment"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] AddBooking(System.Guid, Application.Dtos.AppoinmentCreate_EditDto) on controller API.Controllers.AppointmentController (Clinic).
+2026-03-13 19:30:16.937 +02:00 [INF] Executing BadRequestObjectResult, writing value of type 'Microsoft.AspNetCore.Mvc.ValidationProblemDetails'.
+2026-03-13 19:30:16.970 +02:00 [INF] Executed action API.Controllers.AppointmentController.AddBooking (Clinic) in 93.8101ms
+2026-03-13 19:30:16.974 +02:00 [INF] Executed endpoint 'API.Controllers.AppointmentController.AddBooking (Clinic)'
+2026-03-13 19:30:16.979 +02:00 [INF] Request finished HTTP/2 POST https://localhost:7089/api/Appointment/6882E4F1-DC30-4E13-E7D0-08DE70D7049D - 400 null application/problem+json; charset=utf-8 126.0146ms
+2026-03-13 19:30:30.708 +02:00 [INF] Request starting HTTP/2 POST https://localhost:7089/api/Appointment/6882E4F1-DC30-4E13-E7D0-08DE70D7049D - application/json 45
+2026-03-13 19:30:30.716 +02:00 [INF] Executing endpoint 'API.Controllers.AppointmentController.AddBooking (Clinic)'
+2026-03-13 19:30:30.718 +02:00 [INF] Route matched with {action = "AddBooking", controller = "Appointment"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] AddBooking(System.Guid, Application.Dtos.AppoinmentCreate_EditDto) on controller API.Controllers.AppointmentController (Clinic).
+2026-03-13 19:30:30.846 +02:00 [INF] Executed DbCommand (77ms) [Parameters=[@__p_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [d].[Id], [d].[About], [d].[CategoryId], [d].[Code], [d].[CreatedAt], [d].[CreatedBy], [d].[IsFav], [d].[ModifiedAt], [d].[ModifiedBy], [d].[Name], [d].[UserId]
+FROM [Doctors] AS [d]
+WHERE [d].[Id] = @__p_0
+2026-03-13 19:30:31.198 +02:00 [INF] Executed DbCommand (78ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = DateTime2), @p2='?' (Size = 4000), @p3='?' (DbType = Date), @p4='?' (DbType = Guid), @p5='?' (DbType = Time), @p6='?' (DbType = DateTime2), @p7='?' (Size = 4000), @p8='?' (DbType = Int32), @p9='?' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [Appointments] ([Id], [CreatedAt], [CreatedBy], [Date], [DoctorId], [Hour], [ModifiedAt], [ModifiedBy], [Status], [UserId])
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9);
+2026-03-13 19:30:31.321 +02:00 [INF] Executed DbCommand (82ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = DateTime2), @p2='?' (Size = 4000), @p3='?' (DbType = Boolean), @p4='?' (Size = 4000), @p5='?' (DbType = DateTime2), @p6='?' (Size = 4000), @p7='?' (Size = 4000), @p8='?' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [Notifications] ([Id], [CreatedAt], [CreatedBy], [IsRead], [Message], [ModifiedAt], [ModifiedBy], [Title], [UserId])
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8);
+2026-03-13 19:30:31.332 +02:00 [INF] Executing OkObjectResult, writing value of type 'System.String'.
+2026-03-13 19:30:31.336 +02:00 [INF] Executed action API.Controllers.AppointmentController.AddBooking (Clinic) in 614.0749ms
+2026-03-13 19:30:31.339 +02:00 [INF] Executed endpoint 'API.Controllers.AppointmentController.AddBooking (Clinic)'
+2026-03-13 19:30:31.343 +02:00 [INF] Request finished HTTP/2 POST https://localhost:7089/api/Appointment/6882E4F1-DC30-4E13-E7D0-08DE70D7049D - 200 null text/plain; charset=utf-8 635.5739ms
+2026-03-13 19:30:54.839 +02:00 [INF] Request starting HTTP/2 PUT https://localhost:7089/api/Appointment/cancel/BCB4E13D-9DB8-4D8B-6959-08DE812639A7 - null 0
+2026-03-13 19:30:54.847 +02:00 [INF] Executing endpoint 'API.Controllers.AppointmentController.CancelBooking (Clinic)'
+2026-03-13 19:30:54.849 +02:00 [INF] Route matched with {action = "CancelBooking", controller = "Appointment"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] CancelBooking(System.Guid) on controller API.Controllers.AppointmentController (Clinic).
+2026-03-13 19:30:54.934 +02:00 [INF] Executed DbCommand (79ms) [Parameters=[@__bookingId_0='?' (DbType = Guid), @__userId_1='?' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[CreatedAt], [a].[CreatedBy], [a].[Date], [a].[DoctorId], [a].[Hour], [a].[ModifiedAt], [a].[ModifiedBy], [a].[Status], [a].[UserId], [d].[Id], [d].[About], [d].[CategoryId], [d].[Code], [d].[CreatedAt], [d].[CreatedBy], [d].[IsFav], [d].[ModifiedAt], [d].[ModifiedBy], [d].[Name], [d].[UserId]
+FROM [Appointments] AS [a]
+INNER JOIN [Doctors] AS [d] ON [a].[DoctorId] = [d].[Id]
+WHERE [a].[Id] = @__bookingId_0 AND [a].[UserId] = @__userId_1
+2026-03-13 19:30:55.067 +02:00 [INF] Executed DbCommand (80ms) [Parameters=[@p9='?' (DbType = Guid), @p0='?' (DbType = DateTime2), @p1='?' (Size = 4000), @p2='?' (DbType = Date), @p3='?' (DbType = Guid), @p4='?' (DbType = Time), @p5='?' (DbType = DateTime2), @p6='?' (Size = 4000), @p7='?' (DbType = Int32), @p8='?' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+UPDATE [Appointments] SET [CreatedAt] = @p0, [CreatedBy] = @p1, [Date] = @p2, [DoctorId] = @p3, [Hour] = @p4, [ModifiedAt] = @p5, [ModifiedBy] = @p6, [Status] = @p7, [UserId] = @p8
+OUTPUT 1
+WHERE [Id] = @p9;
+2026-03-13 19:30:55.234 +02:00 [INF] Executed DbCommand (75ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = DateTime2), @p2='?' (Size = 4000), @p3='?' (DbType = Boolean), @p4='?' (Size = 4000), @p5='?' (DbType = DateTime2), @p6='?' (Size = 4000), @p7='?' (Size = 4000), @p8='?' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [Notifications] ([Id], [CreatedAt], [CreatedBy], [IsRead], [Message], [ModifiedAt], [ModifiedBy], [Title], [UserId])
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8);
+2026-03-13 19:30:55.250 +02:00 [INF] Executing OkObjectResult, writing value of type 'System.String'.
+2026-03-13 19:30:55.254 +02:00 [INF] Executed action API.Controllers.AppointmentController.CancelBooking (Clinic) in 400.8342ms
+2026-03-13 19:30:55.260 +02:00 [INF] Executed endpoint 'API.Controllers.AppointmentController.CancelBooking (Clinic)'
+2026-03-13 19:30:55.263 +02:00 [INF] Request finished HTTP/2 PUT https://localhost:7089/api/Appointment/cancel/BCB4E13D-9DB8-4D8B-6959-08DE812639A7 - 200 null text/plain; charset=utf-8 424.4116ms

@@ -1,0 +1,1262 @@
+2026-03-01 00:14:31.035 +02:00 [INF] Executed DbCommand (142ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2026-03-01 00:14:31.123 +02:00 [INF] Acquiring an exclusive lock for migration application. See https://aka.ms/efcore-docs-migrations-lock for more information if this takes too long.
+2026-03-01 00:14:31.322 +02:00 [INF] Executed DbCommand (196ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+DECLARE @result int;
+EXEC @result = sp_getapplock @Resource = '__EFMigrationsLock', @LockOwner = 'Session', @LockMode = 'Exclusive';
+SELECT @result
+2026-03-01 00:14:31.801 +02:00 [INF] Executed DbCommand (189ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+IF OBJECT_ID(N'[__EFMigrationsHistory]') IS NULL
+BEGIN
+    CREATE TABLE [__EFMigrationsHistory] (
+        [MigrationId] nvarchar(150) NOT NULL,
+        [ProductVersion] nvarchar(32) NOT NULL,
+        CONSTRAINT [PK___EFMigrationsHistory] PRIMARY KEY ([MigrationId])
+    );
+END;
+2026-03-01 00:14:32.286 +02:00 [INF] Executed DbCommand (196ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2026-03-01 00:14:32.408 +02:00 [INF] Executed DbCommand (122ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+2026-03-01 00:14:32.580 +02:00 [INF] Executed DbCommand (168ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId];
+2026-03-01 00:14:32.595 +02:00 [INF] Applying migration '20260228220607_appointment_edit'.
+2026-03-01 00:14:32.814 +02:00 [INF] Executed DbCommand (162ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE [WorkingTimes] DROP CONSTRAINT [FK_WorkingTimes_Patients_PatientId];
+2026-03-01 00:14:32.977 +02:00 [INF] Executed DbCommand (162ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+DROP TABLE [Patients];
+2026-03-01 00:14:33.139 +02:00 [INF] Executed DbCommand (162ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+DROP INDEX [IX_WorkingTimes_PatientId] ON [WorkingTimes];
+2026-03-01 00:14:33.388 +02:00 [INF] Executed DbCommand (248ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+DECLARE @var sysname;
+SELECT @var = [d].[name]
+FROM [sys].[default_constraints] [d]
+INNER JOIN [sys].[columns] [c] ON [d].[parent_column_id] = [c].[column_id] AND [d].[parent_object_id] = [c].[object_id]
+WHERE ([d].[parent_object_id] = OBJECT_ID(N'[WorkingTimes]') AND [c].[name] = N'BookStatus');
+IF @var IS NOT NULL EXEC(N'ALTER TABLE [WorkingTimes] DROP CONSTRAINT [' + @var + '];');
+ALTER TABLE [WorkingTimes] DROP COLUMN [BookStatus];
+2026-03-01 00:14:33.578 +02:00 [INF] Executed DbCommand (189ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+DECLARE @var1 sysname;
+SELECT @var1 = [d].[name]
+FROM [sys].[default_constraints] [d]
+INNER JOIN [sys].[columns] [c] ON [d].[parent_column_id] = [c].[column_id] AND [d].[parent_object_id] = [c].[object_id]
+WHERE ([d].[parent_object_id] = OBJECT_ID(N'[WorkingTimes]') AND [c].[name] = N'PatientId');
+IF @var1 IS NOT NULL EXEC(N'ALTER TABLE [WorkingTimes] DROP CONSTRAINT [' + @var1 + '];');
+ALTER TABLE [WorkingTimes] DROP COLUMN [PatientId];
+2026-03-01 00:14:33.711 +02:00 [INF] Executed DbCommand (133ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [Appointment] (
+    [Id] uniqueidentifier NOT NULL,
+    [Date] date NOT NULL,
+    [Hour] time NOT NULL,
+    [DoctorId] uniqueidentifier NOT NULL,
+    [UserId] nvarchar(450) NULL,
+    [Status] int NOT NULL,
+    [CreatedBy] nvarchar(max) NOT NULL,
+    [CreatedAt] datetime2 NOT NULL,
+    [ModifiedBy] nvarchar(max) NULL,
+    [ModifiedAt] datetime2 NULL,
+    CONSTRAINT [PK_Appointment] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Appointment_AspNetUsers_UserId] FOREIGN KEY ([UserId]) REFERENCES [AspNetUsers] ([Id]),
+    CONSTRAINT [FK_Appointment_Doctors_DoctorId] FOREIGN KEY ([DoctorId]) REFERENCES [Doctors] ([Id]) ON DELETE CASCADE
+);
+2026-03-01 00:14:33.845 +02:00 [INF] Executed DbCommand (133ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_Appointment_DoctorId] ON [Appointment] ([DoctorId]);
+2026-03-01 00:14:34.006 +02:00 [INF] Executed DbCommand (161ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_Appointment_UserId] ON [Appointment] ([UserId]);
+2026-03-01 00:14:34.177 +02:00 [INF] Executed DbCommand (171ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20260228220607_appointment_edit', N'9.0.9');
+2026-03-01 00:14:34.505 +02:00 [INF] Executed DbCommand (180ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+DECLARE @result int;
+EXEC @result = sp_releaseapplock @Resource = '__EFMigrationsLock', @LockOwner = 'Session';
+SELECT @result
+2026-03-01 16:53:21.541 +02:00 [INF] User profile is available. Using 'C:\Users\Yousef_zydan\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2026-03-01 16:53:29.816 +02:00 [INF] Executed DbCommand (365ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @__normalizedName_0
+2026-03-01 16:53:30.190 +02:00 [INF] Executed DbCommand (77ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @__normalizedName_0
+2026-03-01 16:53:30.273 +02:00 [INF] Executed DbCommand (74ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @__normalizedName_0
+2026-03-01 16:53:30.364 +02:00 [INF] Executed DbCommand (75ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @__normalizedName_0
+2026-03-01 16:53:30.500 +02:00 [INF] Executed DbCommand (76ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateOfBirth], [a].[Email], [a].[EmailConfirmed], [a].[Gender], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[Name], [a].[Nickname], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[PhotoPublicId], [a].[PhotoUrl], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2026-03-01 16:53:30.757 +02:00 [INF] Executed DbCommand (76ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateOfBirth], [a].[Email], [a].[EmailConfirmed], [a].[Gender], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[Name], [a].[Nickname], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[PhotoPublicId], [a].[PhotoUrl], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2026-03-01 16:53:30.865 +02:00 [INF] Executed DbCommand (75ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateOfBirth], [a].[Email], [a].[EmailConfirmed], [a].[Gender], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[Name], [a].[Nickname], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[PhotoPublicId], [a].[PhotoUrl], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2026-03-01 16:53:30.976 +02:00 [INF] Executed DbCommand (76ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateOfBirth], [a].[Email], [a].[EmailConfirmed], [a].[Gender], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[Name], [a].[Nickname], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[PhotoPublicId], [a].[PhotoUrl], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2026-03-01 16:53:31.062 +02:00 [INF] Executed DbCommand (77ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateOfBirth], [a].[Email], [a].[EmailConfirmed], [a].[Gender], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[Name], [a].[Nickname], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[PhotoPublicId], [a].[PhotoUrl], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2026-03-01 16:53:31.153 +02:00 [INF] Executed DbCommand (78ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateOfBirth], [a].[Email], [a].[EmailConfirmed], [a].[Gender], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[Name], [a].[Nickname], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[PhotoPublicId], [a].[PhotoUrl], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2026-03-01 16:53:31.242 +02:00 [INF] Executed DbCommand (78ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateOfBirth], [a].[Email], [a].[EmailConfirmed], [a].[Gender], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[Name], [a].[Nickname], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[PhotoPublicId], [a].[PhotoUrl], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2026-03-01 16:53:31.366 +02:00 [INF] Executed DbCommand (91ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateOfBirth], [a].[Email], [a].[EmailConfirmed], [a].[Gender], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[Name], [a].[Nickname], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[PhotoPublicId], [a].[PhotoUrl], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2026-03-01 16:53:31.498 +02:00 [INF] Executed DbCommand (81ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateOfBirth], [a].[Email], [a].[EmailConfirmed], [a].[Gender], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[Name], [a].[Nickname], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[PhotoPublicId], [a].[PhotoUrl], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2026-03-01 16:53:31.705 +02:00 [INF] Executed DbCommand (77ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Categories] AS [c]) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2026-03-01 16:53:31.797 +02:00 [INF] Executed DbCommand (71ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Doctors] AS [d]) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2026-03-01 16:53:34.429 +02:00 [INF] Now listening on: https://localhost:7089
+2026-03-01 16:53:34.433 +02:00 [INF] Now listening on: http://localhost:5127
+2026-03-01 16:53:34.670 +02:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-03-01 16:53:34.673 +02:00 [INF] Hosting environment: Development
+2026-03-01 16:53:34.677 +02:00 [INF] Content root path: E:\Projects\Clinic\Clinic
+2026-03-01 16:53:38.463 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7089/ - null null
+2026-03-01 16:53:39.246 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7089/ - 301 0 null 805.7526ms
+2026-03-01 16:53:39.266 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7089/index.html - null null
+2026-03-01 16:53:39.564 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7089/index.html - 200 null text/html;charset=utf-8 298.1396ms
+2026-03-01 16:53:39.645 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7089/swagger-ui.css - null null
+2026-03-01 16:53:39.676 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7089/index.js - null null
+2026-03-01 16:53:39.674 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7089/swagger-ui-standalone-preset.js - null null
+2026-03-01 16:53:39.813 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7089/index.js - 200 null application/javascript;charset=utf-8 136.9296ms
+2026-03-01 16:53:39.674 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7089/swagger-ui-bundle.js - null null
+2026-03-01 16:53:39.669 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7089/index.css - null null
+2026-03-01 16:53:39.732 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7089/_vs/browserLink - null null
+2026-03-01 16:53:39.762 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7089/_framework/aspnetcore-browser-refresh.js - null null
+2026-03-01 16:53:39.963 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7089/swagger-ui-standalone-preset.js - 200 77352 text/javascript 288.8214ms
+2026-03-01 16:53:39.903 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7089/swagger-ui.css - 200 23647 text/css 258.4852ms
+2026-03-01 16:53:39.960 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7089/index.css - 200 152 text/css 290.2518ms
+2026-03-01 16:53:39.981 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7089/swagger-ui-bundle.js - 200 424765 text/javascript 306.915ms
+2026-03-01 16:53:40.079 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7089/_framework/aspnetcore-browser-refresh.js - 200 16497 application/javascript; charset=utf-8 316.4221ms
+2026-03-01 16:53:40.297 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7089/_vs/browserLink - 200 null text/javascript; charset=UTF-8 565.8629ms
+2026-03-01 16:53:40.716 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7089/swagger/v1/swagger.json - null null
+2026-03-01 16:53:40.811 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7089/favicon-32x32.png - null null
+2026-03-01 16:53:40.827 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7089/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 110.4496ms
+2026-03-01 16:53:40.999 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7089/favicon-32x32.png - 200 628 image/png 187.998ms
+2026-03-01 16:54:11.331 +02:00 [INF] Request starting HTTP/1.1 POST https://localhost:7089/api/Appointment/6882E4F1-DC30-4E13-E7D0-08DE70D7049D - application/json 45
+2026-03-01 16:54:16.674 +02:00 [INF] Executing endpoint 'API.Controllers.AppointmentController.AddBooking (Clinic)'
+2026-03-01 16:54:16.766 +02:00 [INF] Route matched with {action = "AddBooking", controller = "Appointment"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] AddBooking(System.Guid, Application.Dtos.AppoinmentCreate_EditDto) on controller API.Controllers.AppointmentController (Clinic).
+2026-03-01 16:54:17.234 +02:00 [WRN] You do not have a valid license key for the Lucky Penny software AutoMapper. This is allowed for development and testing scenarios. If you are running in production you are required to have a licensed version. Please visit https://luckypennysoftware.com to obtain a valid license.
+2026-03-01 16:54:18.014 +02:00 [INF] Executed DbCommand (81ms) [Parameters=[@__p_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [d].[Id], [d].[About], [d].[CategoryId], [d].[Code], [d].[CreatedAt], [d].[CreatedBy], [d].[IsFav], [d].[ModifiedAt], [d].[ModifiedBy], [d].[Name], [d].[UserId]
+FROM [Doctors] AS [d]
+WHERE [d].[Id] = @__p_0
+2026-03-01 16:54:35.723 +02:00 [ERR] Failed executing DbCommand (224ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = DateTime2), @p2='?' (Size = 4000), @p3='?' (DbType = Date), @p4='?' (DbType = Guid), @p5='?' (DbType = Time), @p6='?' (DbType = DateTime2), @p7='?' (Size = 4000), @p8='?' (DbType = Int32), @p9='?' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [Appointments] ([Id], [CreatedAt], [CreatedBy], [Date], [DoctorId], [Hour], [ModifiedAt], [ModifiedBy], [Status], [UserId])
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9);
+2026-03-01 16:54:35.960 +02:00 [ERR] An exception occurred in the database while saving changes for context type 'Infrastructure.Data.ApplicationDbContext'.
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): Invalid object name 'Appointments'.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__211_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+ClientConnectionId:983ef9e0-5527-4e37-a714-b87c47c87851
+Error Number:208,State:1,Class:16
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Update.Internal.SqlServerModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChangesAsync(IList`1 entries, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): Invalid object name 'Appointments'.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__211_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+ClientConnectionId:983ef9e0-5527-4e37-a714-b87c47c87851
+Error Number:208,State:1,Class:16
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Update.Internal.SqlServerModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChangesAsync(IList`1 entries, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+2026-03-01 16:59:45.151 +02:00 [INF] User profile is available. Using 'C:\Users\Yousef_zydan\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2026-03-01 17:00:00.811 +02:00 [INF] Executed DbCommand (431ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @__normalizedName_0
+2026-03-01 17:00:02.219 +02:00 [INF] Executed DbCommand (93ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @__normalizedName_0
+2026-03-01 17:00:02.368 +02:00 [INF] Executed DbCommand (73ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @__normalizedName_0
+2026-03-01 17:00:02.477 +02:00 [INF] Executed DbCommand (73ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @__normalizedName_0
+2026-03-01 17:00:02.635 +02:00 [INF] Executed DbCommand (87ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateOfBirth], [a].[Email], [a].[EmailConfirmed], [a].[Gender], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[Name], [a].[Nickname], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[PhotoPublicId], [a].[PhotoUrl], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2026-03-01 17:00:03.136 +02:00 [INF] Executed DbCommand (86ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateOfBirth], [a].[Email], [a].[EmailConfirmed], [a].[Gender], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[Name], [a].[Nickname], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[PhotoPublicId], [a].[PhotoUrl], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2026-03-01 17:00:03.229 +02:00 [INF] Executed DbCommand (78ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateOfBirth], [a].[Email], [a].[EmailConfirmed], [a].[Gender], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[Name], [a].[Nickname], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[PhotoPublicId], [a].[PhotoUrl], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2026-03-01 17:00:03.359 +02:00 [INF] Executed DbCommand (78ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateOfBirth], [a].[Email], [a].[EmailConfirmed], [a].[Gender], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[Name], [a].[Nickname], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[PhotoPublicId], [a].[PhotoUrl], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2026-03-01 17:00:03.468 +02:00 [INF] Executed DbCommand (98ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateOfBirth], [a].[Email], [a].[EmailConfirmed], [a].[Gender], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[Name], [a].[Nickname], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[PhotoPublicId], [a].[PhotoUrl], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2026-03-01 17:00:03.601 +02:00 [INF] Executed DbCommand (75ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateOfBirth], [a].[Email], [a].[EmailConfirmed], [a].[Gender], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[Name], [a].[Nickname], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[PhotoPublicId], [a].[PhotoUrl], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2026-03-01 17:00:03.708 +02:00 [INF] Executed DbCommand (90ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateOfBirth], [a].[Email], [a].[EmailConfirmed], [a].[Gender], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[Name], [a].[Nickname], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[PhotoPublicId], [a].[PhotoUrl], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2026-03-01 17:00:03.857 +02:00 [INF] Executed DbCommand (100ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateOfBirth], [a].[Email], [a].[EmailConfirmed], [a].[Gender], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[Name], [a].[Nickname], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[PhotoPublicId], [a].[PhotoUrl], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2026-03-01 17:00:04.072 +02:00 [INF] Executed DbCommand (82ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateOfBirth], [a].[Email], [a].[EmailConfirmed], [a].[Gender], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[Name], [a].[Nickname], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[PhotoPublicId], [a].[PhotoUrl], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2026-03-01 17:00:04.275 +02:00 [INF] Executed DbCommand (76ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Categories] AS [c]) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2026-03-01 17:00:04.405 +02:00 [INF] Executed DbCommand (79ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Doctors] AS [d]) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2026-03-01 17:00:06.725 +02:00 [INF] Now listening on: https://localhost:7089
+2026-03-01 17:00:06.769 +02:00 [INF] Now listening on: http://localhost:5127
+2026-03-01 17:00:07.286 +02:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-03-01 17:00:07.295 +02:00 [INF] Hosting environment: Development
+2026-03-01 17:00:07.299 +02:00 [INF] Content root path: E:\Projects\Clinic\Clinic
+2026-03-01 17:00:09.640 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7089/_vs/browserLink - null null
+2026-03-01 17:00:09.656 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7089/_framework/aspnetcore-browser-refresh.js - null null
+2026-03-01 17:00:10.356 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7089/_framework/aspnetcore-browser-refresh.js - 200 16497 application/javascript; charset=utf-8 735.4496ms
+2026-03-01 17:00:10.573 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7089/_vs/browserLink - 200 null text/javascript; charset=UTF-8 964.3388ms
+2026-03-01 17:00:10.829 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7089/swagger/v1/swagger.json - null null
+2026-03-01 17:00:11.502 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7089/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 672.9904ms
+2026-03-01 17:11:32.318 +02:00 [INF] Request starting HTTP/1.1 POST https://localhost:7089/api/Appointment/6882E4F1-DC30-4E13-E7D0-08DE70D7049D - application/json 45
+2026-03-01 17:11:39.612 +02:00 [INF] Executing endpoint 'API.Controllers.AppointmentController.AddBooking (Clinic)'
+2026-03-01 17:11:39.793 +02:00 [INF] Route matched with {action = "AddBooking", controller = "Appointment"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] AddBooking(System.Guid, Application.Dtos.AppoinmentCreate_EditDto) on controller API.Controllers.AppointmentController (Clinic).
+2026-03-01 17:11:40.334 +02:00 [WRN] You do not have a valid license key for the Lucky Penny software AutoMapper. This is allowed for development and testing scenarios. If you are running in production you are required to have a licensed version. Please visit https://luckypennysoftware.com to obtain a valid license.
+2026-03-01 17:11:41.690 +02:00 [INF] Executed DbCommand (87ms) [Parameters=[@__p_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [d].[Id], [d].[About], [d].[CategoryId], [d].[Code], [d].[CreatedAt], [d].[CreatedBy], [d].[IsFav], [d].[ModifiedAt], [d].[ModifiedBy], [d].[Name], [d].[UserId]
+FROM [Doctors] AS [d]
+WHERE [d].[Id] = @__p_0
+2026-03-01 17:12:02.473 +02:00 [ERR] Failed executing DbCommand (112ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = DateTime2), @p2='?' (Size = 4000), @p3='?' (DbType = Date), @p4='?' (DbType = Guid), @p5='?' (DbType = Time), @p6='?' (DbType = DateTime2), @p7='?' (Size = 4000), @p8='?' (DbType = Int32), @p9='?' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [Appointments] ([Id], [CreatedAt], [CreatedBy], [Date], [DoctorId], [Hour], [ModifiedAt], [ModifiedBy], [Status], [UserId])
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9);
+2026-03-01 17:12:02.613 +02:00 [ERR] An exception occurred in the database while saving changes for context type 'Infrastructure.Data.ApplicationDbContext'.
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): Invalid object name 'Appointments'.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__211_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+ClientConnectionId:0c23f2f3-7b6e-4905-8446-3ab58486812b
+Error Number:208,State:1,Class:16
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Update.Internal.SqlServerModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChangesAsync(IList`1 entries, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): Invalid object name 'Appointments'.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__211_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+ClientConnectionId:0c23f2f3-7b6e-4905-8446-3ab58486812b
+Error Number:208,State:1,Class:16
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Update.Internal.SqlServerModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChangesAsync(IList`1 entries, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+2026-03-01 17:23:15.529 +02:00 [INF] User profile is available. Using 'C:\Users\Yousef_zydan\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2026-03-01 17:23:24.719 +02:00 [INF] Executed DbCommand (383ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @__normalizedName_0
+2026-03-01 17:23:25.027 +02:00 [INF] Executed DbCommand (82ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @__normalizedName_0
+2026-03-01 17:23:25.120 +02:00 [INF] Executed DbCommand (75ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @__normalizedName_0
+2026-03-01 17:23:25.204 +02:00 [INF] Executed DbCommand (75ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @__normalizedName_0
+2026-03-01 17:23:25.341 +02:00 [INF] Executed DbCommand (79ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateOfBirth], [a].[Email], [a].[EmailConfirmed], [a].[Gender], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[Name], [a].[Nickname], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[PhotoPublicId], [a].[PhotoUrl], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2026-03-01 17:23:25.613 +02:00 [INF] Executed DbCommand (78ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateOfBirth], [a].[Email], [a].[EmailConfirmed], [a].[Gender], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[Name], [a].[Nickname], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[PhotoPublicId], [a].[PhotoUrl], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2026-03-01 17:23:25.701 +02:00 [INF] Executed DbCommand (79ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateOfBirth], [a].[Email], [a].[EmailConfirmed], [a].[Gender], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[Name], [a].[Nickname], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[PhotoPublicId], [a].[PhotoUrl], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2026-03-01 17:23:25.786 +02:00 [INF] Executed DbCommand (76ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateOfBirth], [a].[Email], [a].[EmailConfirmed], [a].[Gender], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[Name], [a].[Nickname], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[PhotoPublicId], [a].[PhotoUrl], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2026-03-01 17:23:25.885 +02:00 [INF] Executed DbCommand (79ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateOfBirth], [a].[Email], [a].[EmailConfirmed], [a].[Gender], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[Name], [a].[Nickname], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[PhotoPublicId], [a].[PhotoUrl], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2026-03-01 17:23:26.014 +02:00 [INF] Executed DbCommand (75ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateOfBirth], [a].[Email], [a].[EmailConfirmed], [a].[Gender], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[Name], [a].[Nickname], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[PhotoPublicId], [a].[PhotoUrl], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2026-03-01 17:23:26.144 +02:00 [INF] Executed DbCommand (117ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateOfBirth], [a].[Email], [a].[EmailConfirmed], [a].[Gender], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[Name], [a].[Nickname], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[PhotoPublicId], [a].[PhotoUrl], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2026-03-01 17:23:26.242 +02:00 [INF] Executed DbCommand (78ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateOfBirth], [a].[Email], [a].[EmailConfirmed], [a].[Gender], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[Name], [a].[Nickname], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[PhotoPublicId], [a].[PhotoUrl], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2026-03-01 17:23:26.347 +02:00 [INF] Executed DbCommand (76ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateOfBirth], [a].[Email], [a].[EmailConfirmed], [a].[Gender], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[Name], [a].[Nickname], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[PhotoPublicId], [a].[PhotoUrl], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2026-03-01 17:23:26.525 +02:00 [INF] Executed DbCommand (76ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Categories] AS [c]) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2026-03-01 17:23:26.621 +02:00 [INF] Executed DbCommand (72ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Doctors] AS [d]) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2026-03-01 17:23:28.987 +02:00 [INF] Now listening on: https://localhost:7089
+2026-03-01 17:23:28.991 +02:00 [INF] Now listening on: http://localhost:5127
+2026-03-01 17:23:29.211 +02:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-03-01 17:23:29.241 +02:00 [INF] Hosting environment: Development
+2026-03-01 17:23:29.258 +02:00 [INF] Content root path: E:\Projects\Clinic\Clinic
+2026-03-01 17:23:32.793 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7089/ - null null
+2026-03-01 17:23:33.764 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7089/ - 301 0 null 995.0341ms
+2026-03-01 17:23:33.901 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7089/index.html - null null
+2026-03-01 17:23:34.367 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7089/index.html - 200 null text/html;charset=utf-8 466.6148ms
+2026-03-01 17:23:34.476 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7089/swagger-ui.css - null null
+2026-03-01 17:23:34.485 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7089/swagger-ui-standalone-preset.js - null null
+2026-03-01 17:23:34.481 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7089/swagger-ui-bundle.js - null null
+2026-03-01 17:23:34.480 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7089/index.css - null null
+2026-03-01 17:23:34.495 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7089/index.js - null null
+2026-03-01 17:23:34.796 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7089/index.css - 200 152 text/css 316.2947ms
+2026-03-01 17:23:34.547 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7089/_framework/aspnetcore-browser-refresh.js - null null
+2026-03-01 17:23:34.592 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7089/_vs/browserLink - null null
+2026-03-01 17:23:34.888 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7089/index.js - 200 null application/javascript;charset=utf-8 393.1702ms
+2026-03-01 17:23:34.897 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7089/swagger-ui.css - 200 23647 text/css 420.8022ms
+2026-03-01 17:23:35.058 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7089/_framework/aspnetcore-browser-refresh.js - 200 16497 application/javascript; charset=utf-8 528.7386ms
+2026-03-01 17:23:34.898 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7089/swagger-ui-standalone-preset.js - 200 77352 text/javascript 412.8137ms
+2026-03-01 17:23:34.920 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7089/swagger-ui-bundle.js - 200 424765 text/javascript 434.2562ms
+2026-03-01 17:23:35.264 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7089/_vs/browserLink - 200 null text/javascript; charset=UTF-8 671.1372ms
+2026-03-01 17:23:35.775 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7089/swagger/v1/swagger.json - null null
+2026-03-01 17:23:35.878 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7089/favicon-32x32.png - null null
+2026-03-01 17:23:35.885 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7089/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 110.2277ms
+2026-03-01 17:23:35.944 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7089/favicon-32x32.png - 200 628 image/png 68.8344ms
+2026-03-01 17:23:59.970 +02:00 [INF] Request starting HTTP/1.1 POST https://localhost:7089/api/Appointment/6882E4F1-DC30-4E13-E7D0-08DE70D7049D - application/json 45
+2026-03-01 17:24:00.726 +02:00 [INF] Executing endpoint 'API.Controllers.AppointmentController.AddBooking (Clinic)'
+2026-03-01 17:24:00.856 +02:00 [INF] Route matched with {action = "AddBooking", controller = "Appointment"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] AddBooking(System.Guid, Application.Dtos.AppoinmentCreate_EditDto) on controller API.Controllers.AppointmentController (Clinic).
+2026-03-01 17:24:01.288 +02:00 [WRN] You do not have a valid license key for the Lucky Penny software AutoMapper. This is allowed for development and testing scenarios. If you are running in production you are required to have a licensed version. Please visit https://luckypennysoftware.com to obtain a valid license.
+2026-03-01 17:24:02.348 +02:00 [INF] Executed DbCommand (88ms) [Parameters=[@__p_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [d].[Id], [d].[About], [d].[CategoryId], [d].[Code], [d].[CreatedAt], [d].[CreatedBy], [d].[IsFav], [d].[ModifiedAt], [d].[ModifiedBy], [d].[Name], [d].[UserId]
+FROM [Doctors] AS [d]
+WHERE [d].[Id] = @__p_0
+2026-03-01 17:24:03.535 +02:00 [ERR] Failed executing DbCommand (182ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = DateTime2), @p2='?' (Size = 4000), @p3='?' (DbType = Date), @p4='?' (DbType = Guid), @p5='?' (DbType = Time), @p6='?' (DbType = DateTime2), @p7='?' (Size = 4000), @p8='?' (DbType = Int32), @p9='?' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [Appointments] ([Id], [CreatedAt], [CreatedBy], [Date], [DoctorId], [Hour], [ModifiedAt], [ModifiedBy], [Status], [UserId])
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9);
+2026-03-01 17:24:04.127 +02:00 [ERR] An exception occurred in the database while saving changes for context type 'Infrastructure.Data.ApplicationDbContext'.
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): Invalid object name 'Appointments'.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__211_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+ClientConnectionId:0448c4be-dbb7-4f95-bf7a-76c7fb54909f
+Error Number:208,State:1,Class:16
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Update.Internal.SqlServerModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChangesAsync(IList`1 entries, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): Invalid object name 'Appointments'.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__211_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+ClientConnectionId:0448c4be-dbb7-4f95-bf7a-76c7fb54909f
+Error Number:208,State:1,Class:16
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Update.Internal.SqlServerModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChangesAsync(IList`1 entries, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+2026-03-01 17:24:07.809 +02:00 [INF] Executing BadRequestObjectResult, writing value of type 'System.String'.
+2026-03-01 17:24:07.856 +02:00 [INF] Executed action API.Controllers.AppointmentController.AddBooking (Clinic) in 6980.7525ms
+2026-03-01 17:24:07.863 +02:00 [INF] Executed endpoint 'API.Controllers.AppointmentController.AddBooking (Clinic)'
+2026-03-01 17:24:07.889 +02:00 [INF] Request finished HTTP/1.1 POST https://localhost:7089/api/Appointment/6882E4F1-DC30-4E13-E7D0-08DE70D7049D - 400 null text/plain; charset=utf-8 7920.3662ms
+2026-03-01 17:26:57.873 +02:00 [INF] User profile is available. Using 'C:\Users\Yousef_zydan\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2026-03-01 17:27:03.908 +02:00 [INF] Executed DbCommand (208ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @__normalizedName_0
+2026-03-01 17:27:04.224 +02:00 [INF] Executed DbCommand (81ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @__normalizedName_0
+2026-03-01 17:27:04.325 +02:00 [INF] Executed DbCommand (83ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @__normalizedName_0
+2026-03-01 17:27:04.421 +02:00 [INF] Executed DbCommand (85ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @__normalizedName_0
+2026-03-01 17:27:04.572 +02:00 [INF] Executed DbCommand (95ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateOfBirth], [a].[Email], [a].[EmailConfirmed], [a].[Gender], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[Name], [a].[Nickname], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[PhotoPublicId], [a].[PhotoUrl], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2026-03-01 17:27:04.913 +02:00 [INF] Executed DbCommand (162ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateOfBirth], [a].[Email], [a].[EmailConfirmed], [a].[Gender], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[Name], [a].[Nickname], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[PhotoPublicId], [a].[PhotoUrl], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2026-03-01 17:27:05.061 +02:00 [INF] Executed DbCommand (124ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateOfBirth], [a].[Email], [a].[EmailConfirmed], [a].[Gender], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[Name], [a].[Nickname], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[PhotoPublicId], [a].[PhotoUrl], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2026-03-01 17:27:05.156 +02:00 [INF] Executed DbCommand (74ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateOfBirth], [a].[Email], [a].[EmailConfirmed], [a].[Gender], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[Name], [a].[Nickname], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[PhotoPublicId], [a].[PhotoUrl], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2026-03-01 17:27:05.248 +02:00 [INF] Executed DbCommand (75ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateOfBirth], [a].[Email], [a].[EmailConfirmed], [a].[Gender], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[Name], [a].[Nickname], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[PhotoPublicId], [a].[PhotoUrl], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2026-03-01 17:27:05.424 +02:00 [INF] Executed DbCommand (164ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateOfBirth], [a].[Email], [a].[EmailConfirmed], [a].[Gender], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[Name], [a].[Nickname], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[PhotoPublicId], [a].[PhotoUrl], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2026-03-01 17:27:05.525 +02:00 [INF] Executed DbCommand (91ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateOfBirth], [a].[Email], [a].[EmailConfirmed], [a].[Gender], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[Name], [a].[Nickname], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[PhotoPublicId], [a].[PhotoUrl], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2026-03-01 17:27:05.628 +02:00 [INF] Executed DbCommand (93ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateOfBirth], [a].[Email], [a].[EmailConfirmed], [a].[Gender], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[Name], [a].[Nickname], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[PhotoPublicId], [a].[PhotoUrl], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2026-03-01 17:27:05.715 +02:00 [INF] Executed DbCommand (76ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateOfBirth], [a].[Email], [a].[EmailConfirmed], [a].[Gender], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[Name], [a].[Nickname], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[PhotoPublicId], [a].[PhotoUrl], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2026-03-01 17:27:05.866 +02:00 [INF] Executed DbCommand (75ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Categories] AS [c]) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2026-03-01 17:27:05.984 +02:00 [INF] Executed DbCommand (95ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Doctors] AS [d]) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2026-03-01 17:27:07.425 +02:00 [INF] Now listening on: https://localhost:7089
+2026-03-01 17:27:07.430 +02:00 [INF] Now listening on: http://localhost:5127
+2026-03-01 17:27:08.227 +02:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-03-01 17:27:08.254 +02:00 [INF] Hosting environment: Development
+2026-03-01 17:27:08.277 +02:00 [INF] Content root path: E:\Projects\Clinic\Clinic
+2026-03-01 17:27:11.967 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7089/_vs/browserLink - null null
+2026-03-01 17:27:11.967 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7089/_framework/aspnetcore-browser-refresh.js - null null
+2026-03-01 17:27:12.705 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7089/_framework/aspnetcore-browser-refresh.js - 200 16497 application/javascript; charset=utf-8 846.6632ms
+2026-03-01 17:27:13.203 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7089/_vs/browserLink - 200 null text/javascript; charset=UTF-8 1355.04ms
+2026-03-01 17:27:13.416 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7089/swagger/v1/swagger.json - null null
+2026-03-01 17:27:14.403 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7089/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 988.1751ms
+2026-03-01 17:27:22.091 +02:00 [INF] Request starting HTTP/1.1 POST https://localhost:7089/api/Appointment/6882E4F1-DC30-4E13-E7D0-08DE70D7049D - application/json 45
+2026-03-01 17:27:23.398 +02:00 [INF] Executing endpoint 'API.Controllers.AppointmentController.AddBooking (Clinic)'
+2026-03-01 17:27:23.605 +02:00 [INF] Route matched with {action = "AddBooking", controller = "Appointment"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] AddBooking(System.Guid, Application.Dtos.AppoinmentCreate_EditDto) on controller API.Controllers.AppointmentController (Clinic).
+2026-03-01 17:27:24.130 +02:00 [WRN] You do not have a valid license key for the Lucky Penny software AutoMapper. This is allowed for development and testing scenarios. If you are running in production you are required to have a licensed version. Please visit https://luckypennysoftware.com to obtain a valid license.
+2026-03-01 17:27:24.974 +02:00 [INF] Executed DbCommand (88ms) [Parameters=[@__p_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [d].[Id], [d].[About], [d].[CategoryId], [d].[Code], [d].[CreatedAt], [d].[CreatedBy], [d].[IsFav], [d].[ModifiedAt], [d].[ModifiedBy], [d].[Name], [d].[UserId]
+FROM [Doctors] AS [d]
+WHERE [d].[Id] = @__p_0
+2026-03-01 17:27:26.599 +02:00 [ERR] Failed executing DbCommand (110ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = DateTime2), @p2='?' (Size = 4000), @p3='?' (DbType = Date), @p4='?' (DbType = Guid), @p5='?' (DbType = Time), @p6='?' (DbType = DateTime2), @p7='?' (Size = 4000), @p8='?' (DbType = Int32), @p9='?' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [Appointments] ([Id], [CreatedAt], [CreatedBy], [Date], [DoctorId], [Hour], [ModifiedAt], [ModifiedBy], [Status], [UserId])
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9);
+2026-03-01 17:27:26.797 +02:00 [ERR] An exception occurred in the database while saving changes for context type 'Infrastructure.Data.ApplicationDbContext'.
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): Invalid object name 'Appointments'.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__211_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+ClientConnectionId:1d651f8b-7672-4bd4-8605-e55565568487
+Error Number:208,State:1,Class:16
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Update.Internal.SqlServerModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChangesAsync(IList`1 entries, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): Invalid object name 'Appointments'.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__211_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+ClientConnectionId:1d651f8b-7672-4bd4-8605-e55565568487
+Error Number:208,State:1,Class:16
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Update.Internal.SqlServerModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChangesAsync(IList`1 entries, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+2026-03-01 17:27:30.609 +02:00 [INF] Executing BadRequestObjectResult, writing value of type 'System.String'.
+2026-03-01 17:27:30.650 +02:00 [INF] Executed action API.Controllers.AppointmentController.AddBooking (Clinic) in 7022.354ms
+2026-03-01 17:27:30.666 +02:00 [INF] Executed endpoint 'API.Controllers.AppointmentController.AddBooking (Clinic)'
+2026-03-01 17:27:30.698 +02:00 [INF] Request finished HTTP/1.1 POST https://localhost:7089/api/Appointment/6882E4F1-DC30-4E13-E7D0-08DE70D7049D - 400 null text/plain; charset=utf-8 8608.0287ms
+2026-03-01 17:30:23.643 +02:00 [INF] Executed DbCommand (114ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2026-03-01 17:30:23.786 +02:00 [INF] Acquiring an exclusive lock for migration application. See https://aka.ms/efcore-docs-migrations-lock for more information if this takes too long.
+2026-03-01 17:30:23.918 +02:00 [INF] Executed DbCommand (124ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+DECLARE @result int;
+EXEC @result = sp_getapplock @Resource = '__EFMigrationsLock', @LockOwner = 'Session', @LockMode = 'Exclusive';
+SELECT @result
+2026-03-01 17:30:24.642 +02:00 [INF] Executed DbCommand (79ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+IF OBJECT_ID(N'[__EFMigrationsHistory]') IS NULL
+BEGIN
+    CREATE TABLE [__EFMigrationsHistory] (
+        [MigrationId] nvarchar(150) NOT NULL,
+        [ProductVersion] nvarchar(32) NOT NULL,
+        CONSTRAINT [PK___EFMigrationsHistory] PRIMARY KEY ([MigrationId])
+    );
+END;
+2026-03-01 17:30:24.944 +02:00 [INF] Executed DbCommand (84ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2026-03-01 17:30:25.049 +02:00 [INF] Executed DbCommand (103ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+2026-03-01 17:30:25.154 +02:00 [INF] Executed DbCommand (101ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId];
+2026-03-01 17:30:25.180 +02:00 [INF] Applying migration '20260301152924_addingAppointmentsInContext'.
+2026-03-01 17:30:25.437 +02:00 [INF] Executed DbCommand (96ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE [Appointment] DROP CONSTRAINT [FK_Appointment_AspNetUsers_UserId];
+2026-03-01 17:30:25.526 +02:00 [INF] Executed DbCommand (88ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE [Appointment] DROP CONSTRAINT [FK_Appointment_Doctors_DoctorId];
+2026-03-01 17:30:25.611 +02:00 [INF] Executed DbCommand (85ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE [Appointment] DROP CONSTRAINT [PK_Appointment];
+2026-03-01 17:30:26.026 +02:00 [INF] Executed DbCommand (414ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+EXEC sp_rename N'[Appointment]', N'Appointments', 'OBJECT';
+2026-03-01 17:30:26.104 +02:00 [INF] Executed DbCommand (78ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+EXEC sp_rename N'[Appointments].[IX_Appointment_UserId]', N'IX_Appointments_UserId', 'INDEX';
+2026-03-01 17:30:26.180 +02:00 [INF] Executed DbCommand (75ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+EXEC sp_rename N'[Appointments].[IX_Appointment_DoctorId]', N'IX_Appointments_DoctorId', 'INDEX';
+2026-03-01 17:30:26.264 +02:00 [INF] Executed DbCommand (83ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE [Appointments] ADD CONSTRAINT [PK_Appointments] PRIMARY KEY ([Id]);
+2026-03-01 17:30:26.341 +02:00 [INF] Executed DbCommand (77ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE [Appointments] ADD CONSTRAINT [FK_Appointments_AspNetUsers_UserId] FOREIGN KEY ([UserId]) REFERENCES [AspNetUsers] ([Id]);
+2026-03-01 17:30:26.428 +02:00 [INF] Executed DbCommand (86ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE [Appointments] ADD CONSTRAINT [FK_Appointments_Doctors_DoctorId] FOREIGN KEY ([DoctorId]) REFERENCES [Doctors] ([Id]) ON DELETE CASCADE;
+2026-03-01 17:30:26.504 +02:00 [INF] Executed DbCommand (75ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20260301152924_addingAppointmentsInContext', N'9.0.9');
+2026-03-01 17:30:26.656 +02:00 [INF] Executed DbCommand (75ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+DECLARE @result int;
+EXEC @result = sp_releaseapplock @Resource = '__EFMigrationsLock', @LockOwner = 'Session';
+SELECT @result
+2026-03-01 17:30:46.204 +02:00 [INF] User profile is available. Using 'C:\Users\Yousef_zydan\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2026-03-01 17:30:53.914 +02:00 [INF] Executed DbCommand (253ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @__normalizedName_0
+2026-03-01 17:30:54.252 +02:00 [INF] Executed DbCommand (100ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @__normalizedName_0
+2026-03-01 17:30:54.402 +02:00 [INF] Executed DbCommand (74ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @__normalizedName_0
+2026-03-01 17:30:54.860 +02:00 [INF] Executed DbCommand (91ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @__normalizedName_0
+2026-03-01 17:30:55.002 +02:00 [INF] Executed DbCommand (80ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateOfBirth], [a].[Email], [a].[EmailConfirmed], [a].[Gender], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[Name], [a].[Nickname], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[PhotoPublicId], [a].[PhotoUrl], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2026-03-01 17:30:55.272 +02:00 [INF] Executed DbCommand (80ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateOfBirth], [a].[Email], [a].[EmailConfirmed], [a].[Gender], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[Name], [a].[Nickname], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[PhotoPublicId], [a].[PhotoUrl], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2026-03-01 17:30:55.364 +02:00 [INF] Executed DbCommand (76ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateOfBirth], [a].[Email], [a].[EmailConfirmed], [a].[Gender], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[Name], [a].[Nickname], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[PhotoPublicId], [a].[PhotoUrl], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2026-03-01 17:30:55.556 +02:00 [INF] Executed DbCommand (126ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateOfBirth], [a].[Email], [a].[EmailConfirmed], [a].[Gender], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[Name], [a].[Nickname], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[PhotoPublicId], [a].[PhotoUrl], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2026-03-01 17:30:55.655 +02:00 [INF] Executed DbCommand (79ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateOfBirth], [a].[Email], [a].[EmailConfirmed], [a].[Gender], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[Name], [a].[Nickname], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[PhotoPublicId], [a].[PhotoUrl], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2026-03-01 17:30:55.771 +02:00 [INF] Executed DbCommand (80ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateOfBirth], [a].[Email], [a].[EmailConfirmed], [a].[Gender], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[Name], [a].[Nickname], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[PhotoPublicId], [a].[PhotoUrl], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2026-03-01 17:30:55.888 +02:00 [INF] Executed DbCommand (78ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateOfBirth], [a].[Email], [a].[EmailConfirmed], [a].[Gender], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[Name], [a].[Nickname], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[PhotoPublicId], [a].[PhotoUrl], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2026-03-01 17:30:56.000 +02:00 [INF] Executed DbCommand (77ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateOfBirth], [a].[Email], [a].[EmailConfirmed], [a].[Gender], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[Name], [a].[Nickname], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[PhotoPublicId], [a].[PhotoUrl], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2026-03-01 17:30:56.108 +02:00 [INF] Executed DbCommand (75ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateOfBirth], [a].[Email], [a].[EmailConfirmed], [a].[Gender], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[Name], [a].[Nickname], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[PhotoPublicId], [a].[PhotoUrl], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2026-03-01 17:30:56.406 +02:00 [INF] Executed DbCommand (76ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Categories] AS [c]) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2026-03-01 17:30:56.505 +02:00 [INF] Executed DbCommand (76ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Doctors] AS [d]) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2026-03-01 17:30:58.937 +02:00 [INF] Now listening on: https://localhost:7089
+2026-03-01 17:30:58.941 +02:00 [INF] Now listening on: http://localhost:5127
+2026-03-01 17:30:59.198 +02:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-03-01 17:30:59.204 +02:00 [INF] Hosting environment: Development
+2026-03-01 17:30:59.207 +02:00 [INF] Content root path: E:\Projects\Clinic\Clinic
+2026-03-01 17:31:02.938 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7089/_vs/browserLink - null null
+2026-03-01 17:31:02.936 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7089/_framework/aspnetcore-browser-refresh.js - null null
+2026-03-01 17:31:03.473 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7089/_framework/aspnetcore-browser-refresh.js - 200 16497 application/javascript; charset=utf-8 626.8779ms
+2026-03-01 17:31:03.766 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7089/_vs/browserLink - 200 null text/javascript; charset=UTF-8 943.5477ms
+2026-03-01 17:31:05.596 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7089/swagger/v1/swagger.json - null null
+2026-03-01 17:31:05.979 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7089/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 383.8336ms
+2026-03-01 17:31:15.379 +02:00 [INF] Request starting HTTP/1.1 POST https://localhost:7089/api/Appointment/6882E4F1-DC30-4E13-E7D0-08DE70D7049D - application/json 45
+2026-03-01 17:31:15.928 +02:00 [INF] Executing endpoint 'API.Controllers.AppointmentController.AddBooking (Clinic)'
+2026-03-01 17:31:16.003 +02:00 [INF] Route matched with {action = "AddBooking", controller = "Appointment"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] AddBooking(System.Guid, Application.Dtos.AppoinmentCreate_EditDto) on controller API.Controllers.AppointmentController (Clinic).
+2026-03-01 17:31:16.545 +02:00 [WRN] You do not have a valid license key for the Lucky Penny software AutoMapper. This is allowed for development and testing scenarios. If you are running in production you are required to have a licensed version. Please visit https://luckypennysoftware.com to obtain a valid license.
+2026-03-01 17:31:18.447 +02:00 [INF] Executed DbCommand (313ms) [Parameters=[@__p_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [d].[Id], [d].[About], [d].[CategoryId], [d].[Code], [d].[CreatedAt], [d].[CreatedBy], [d].[IsFav], [d].[ModifiedAt], [d].[ModifiedBy], [d].[Name], [d].[UserId]
+FROM [Doctors] AS [d]
+WHERE [d].[Id] = @__p_0
+2026-03-01 17:31:20.691 +02:00 [INF] Executed DbCommand (112ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = DateTime2), @p2='?' (Size = 4000), @p3='?' (DbType = Date), @p4='?' (DbType = Guid), @p5='?' (DbType = Time), @p6='?' (DbType = DateTime2), @p7='?' (Size = 4000), @p8='?' (DbType = Int32), @p9='?' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [Appointments] ([Id], [CreatedAt], [CreatedBy], [Date], [DoctorId], [Hour], [ModifiedAt], [ModifiedBy], [Status], [UserId])
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9);
+2026-03-01 17:31:20.766 +02:00 [INF] Executing OkObjectResult, writing value of type 'System.String'.
+2026-03-01 17:31:20.808 +02:00 [INF] Executed action API.Controllers.AppointmentController.AddBooking (Clinic) in 4779.5477ms
+2026-03-01 17:31:20.864 +02:00 [INF] Executed endpoint 'API.Controllers.AppointmentController.AddBooking (Clinic)'
+2026-03-01 17:31:20.894 +02:00 [INF] Request finished HTTP/1.1 POST https://localhost:7089/api/Appointment/6882E4F1-DC30-4E13-E7D0-08DE70D7049D - 200 null text/plain; charset=utf-8 5514.9668ms
+2026-03-01 17:41:55.148 +02:00 [INF] Executed DbCommand (113ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2026-03-01 17:41:55.297 +02:00 [INF] Acquiring an exclusive lock for migration application. See https://aka.ms/efcore-docs-migrations-lock for more information if this takes too long.
+2026-03-01 17:41:55.405 +02:00 [INF] Executed DbCommand (101ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+DECLARE @result int;
+EXEC @result = sp_getapplock @Resource = '__EFMigrationsLock', @LockOwner = 'Session', @LockMode = 'Exclusive';
+SELECT @result
+2026-03-01 17:41:55.900 +02:00 [INF] Executed DbCommand (81ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+IF OBJECT_ID(N'[__EFMigrationsHistory]') IS NULL
+BEGIN
+    CREATE TABLE [__EFMigrationsHistory] (
+        [MigrationId] nvarchar(150) NOT NULL,
+        [ProductVersion] nvarchar(32) NOT NULL,
+        CONSTRAINT [PK___EFMigrationsHistory] PRIMARY KEY ([MigrationId])
+    );
+END;
+2026-03-01 17:41:56.137 +02:00 [INF] Executed DbCommand (73ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2026-03-01 17:41:56.215 +02:00 [INF] Executed DbCommand (74ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+2026-03-01 17:41:56.301 +02:00 [INF] Executed DbCommand (81ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId];
+2026-03-01 17:41:56.324 +02:00 [INF] Applying migration '20260301154121_jdj'.
+2026-03-01 17:41:56.537 +02:00 [INF] Executed DbCommand (85ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+DROP TABLE [Appointments];
+2026-03-01 17:41:56.624 +02:00 [INF] Executed DbCommand (86ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20260301154121_jdj', N'9.0.9');
+2026-03-01 17:41:56.780 +02:00 [INF] Executed DbCommand (80ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+DECLARE @result int;
+EXEC @result = sp_releaseapplock @Resource = '__EFMigrationsLock', @LockOwner = 'Session';
+SELECT @result
+2026-03-01 17:43:50.686 +02:00 [INF] Executed DbCommand (116ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2026-03-01 17:43:50.830 +02:00 [INF] Acquiring an exclusive lock for migration application. See https://aka.ms/efcore-docs-migrations-lock for more information if this takes too long.
+2026-03-01 17:43:50.937 +02:00 [INF] Executed DbCommand (100ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+DECLARE @result int;
+EXEC @result = sp_getapplock @Resource = '__EFMigrationsLock', @LockOwner = 'Session', @LockMode = 'Exclusive';
+SELECT @result
+2026-03-01 17:43:51.437 +02:00 [INF] Executed DbCommand (80ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+IF OBJECT_ID(N'[__EFMigrationsHistory]') IS NULL
+BEGIN
+    CREATE TABLE [__EFMigrationsHistory] (
+        [MigrationId] nvarchar(150) NOT NULL,
+        [ProductVersion] nvarchar(32) NOT NULL,
+        CONSTRAINT [PK___EFMigrationsHistory] PRIMARY KEY ([MigrationId])
+    );
+END;
+2026-03-01 17:43:51.681 +02:00 [INF] Executed DbCommand (77ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2026-03-01 17:43:51.758 +02:00 [INF] Executed DbCommand (76ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+2026-03-01 17:43:51.843 +02:00 [INF] Executed DbCommand (80ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId];
+2026-03-01 17:43:51.864 +02:00 [INF] Applying migration '20260301154332_fdd'.
+2026-03-01 17:43:52.218 +02:00 [INF] Executed DbCommand (222ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [Appointments] (
+    [Id] uniqueidentifier NOT NULL,
+    [Date] date NOT NULL,
+    [Hour] time NOT NULL,
+    [DoctorId] uniqueidentifier NOT NULL,
+    [UserId] nvarchar(450) NULL,
+    [Status] int NOT NULL,
+    [CreatedBy] nvarchar(max) NOT NULL,
+    [CreatedAt] datetime2 NOT NULL,
+    [ModifiedBy] nvarchar(max) NULL,
+    [ModifiedAt] datetime2 NULL,
+    CONSTRAINT [PK_Appointments] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Appointments_AspNetUsers_UserId] FOREIGN KEY ([UserId]) REFERENCES [AspNetUsers] ([Id]),
+    CONSTRAINT [FK_Appointments_Doctors_DoctorId] FOREIGN KEY ([DoctorId]) REFERENCES [Doctors] ([Id]) ON DELETE CASCADE
+);
+2026-03-01 17:43:52.368 +02:00 [INF] Executed DbCommand (149ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_Appointments_DoctorId] ON [Appointments] ([DoctorId]);
+2026-03-01 17:43:52.486 +02:00 [INF] Executed DbCommand (118ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_Appointments_UserId] ON [Appointments] ([UserId]);
+2026-03-01 17:43:52.587 +02:00 [INF] Executed DbCommand (100ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20260301154332_fdd', N'9.0.9');
+2026-03-01 17:43:52.830 +02:00 [INF] Executed DbCommand (168ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+DECLARE @result int;
+EXEC @result = sp_releaseapplock @Resource = '__EFMigrationsLock', @LockOwner = 'Session';
+SELECT @result
+2026-03-01 17:44:33.490 +02:00 [INF] User profile is available. Using 'C:\Users\Yousef_zydan\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2026-03-01 17:44:40.344 +02:00 [INF] Executed DbCommand (773ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @__normalizedName_0
+2026-03-01 17:44:40.951 +02:00 [INF] Executed DbCommand (79ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @__normalizedName_0
+2026-03-01 17:44:41.072 +02:00 [INF] Executed DbCommand (78ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @__normalizedName_0
+2026-03-01 17:44:41.246 +02:00 [INF] Executed DbCommand (81ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @__normalizedName_0
+2026-03-01 17:44:41.401 +02:00 [INF] Executed DbCommand (85ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateOfBirth], [a].[Email], [a].[EmailConfirmed], [a].[Gender], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[Name], [a].[Nickname], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[PhotoPublicId], [a].[PhotoUrl], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2026-03-01 17:44:41.717 +02:00 [INF] Executed DbCommand (80ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateOfBirth], [a].[Email], [a].[EmailConfirmed], [a].[Gender], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[Name], [a].[Nickname], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[PhotoPublicId], [a].[PhotoUrl], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2026-03-01 17:44:41.814 +02:00 [INF] Executed DbCommand (78ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateOfBirth], [a].[Email], [a].[EmailConfirmed], [a].[Gender], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[Name], [a].[Nickname], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[PhotoPublicId], [a].[PhotoUrl], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2026-03-01 17:44:42.063 +02:00 [INF] Executed DbCommand (77ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateOfBirth], [a].[Email], [a].[EmailConfirmed], [a].[Gender], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[Name], [a].[Nickname], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[PhotoPublicId], [a].[PhotoUrl], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2026-03-01 17:44:42.160 +02:00 [INF] Executed DbCommand (81ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateOfBirth], [a].[Email], [a].[EmailConfirmed], [a].[Gender], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[Name], [a].[Nickname], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[PhotoPublicId], [a].[PhotoUrl], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2026-03-01 17:44:42.400 +02:00 [INF] Executed DbCommand (77ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateOfBirth], [a].[Email], [a].[EmailConfirmed], [a].[Gender], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[Name], [a].[Nickname], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[PhotoPublicId], [a].[PhotoUrl], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2026-03-01 17:44:42.542 +02:00 [INF] Executed DbCommand (84ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateOfBirth], [a].[Email], [a].[EmailConfirmed], [a].[Gender], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[Name], [a].[Nickname], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[PhotoPublicId], [a].[PhotoUrl], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2026-03-01 17:44:42.685 +02:00 [INF] Executed DbCommand (89ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateOfBirth], [a].[Email], [a].[EmailConfirmed], [a].[Gender], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[Name], [a].[Nickname], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[PhotoPublicId], [a].[PhotoUrl], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2026-03-01 17:44:42.883 +02:00 [INF] Executed DbCommand (100ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateOfBirth], [a].[Email], [a].[EmailConfirmed], [a].[Gender], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[Name], [a].[Nickname], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[PhotoPublicId], [a].[PhotoUrl], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2026-03-01 17:44:43.592 +02:00 [INF] Executed DbCommand (80ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Categories] AS [c]) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2026-03-01 17:44:43.917 +02:00 [INF] Executed DbCommand (82ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Doctors] AS [d]) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2026-03-01 17:44:45.884 +02:00 [INF] Now listening on: https://localhost:7089
+2026-03-01 17:44:45.889 +02:00 [INF] Now listening on: http://localhost:5127
+2026-03-01 17:44:46.304 +02:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-03-01 17:44:46.307 +02:00 [INF] Hosting environment: Development
+2026-03-01 17:44:46.310 +02:00 [INF] Content root path: E:\Projects\Clinic\Clinic
+2026-03-01 17:44:53.953 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7089/_vs/browserLink - null null
+2026-03-01 17:44:53.954 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7089/_framework/aspnetcore-browser-refresh.js - null null
+2026-03-01 17:44:54.478 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7089/_framework/aspnetcore-browser-refresh.js - 200 16497 application/javascript; charset=utf-8 541.5354ms
+2026-03-01 17:44:54.630 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7089/_vs/browserLink - 200 null text/javascript; charset=UTF-8 704.5175ms
+2026-03-01 17:44:58.463 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7089/swagger/v1/swagger.json - null null
+2026-03-01 17:44:58.711 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7089/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 249.0532ms
+2026-03-01 17:44:59.328 +02:00 [INF] Request starting HTTP/1.1 POST https://localhost:7089/api/Appointment/6882E4F1-DC30-4E13-E7D0-08DE70D7049D - application/json 45
+2026-03-01 17:45:06.624 +02:00 [INF] Executing endpoint 'API.Controllers.AppointmentController.AddBooking (Clinic)'
+2026-03-01 17:45:06.731 +02:00 [INF] Route matched with {action = "AddBooking", controller = "Appointment"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] AddBooking(System.Guid, Application.Dtos.AppoinmentCreate_EditDto) on controller API.Controllers.AppointmentController (Clinic).
+2026-03-01 17:45:07.185 +02:00 [WRN] You do not have a valid license key for the Lucky Penny software AutoMapper. This is allowed for development and testing scenarios. If you are running in production you are required to have a licensed version. Please visit https://luckypennysoftware.com to obtain a valid license.
+2026-03-01 17:45:08.030 +02:00 [INF] Executed DbCommand (96ms) [Parameters=[@__p_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [d].[Id], [d].[About], [d].[CategoryId], [d].[Code], [d].[CreatedAt], [d].[CreatedBy], [d].[IsFav], [d].[ModifiedAt], [d].[ModifiedBy], [d].[Name], [d].[UserId]
+FROM [Doctors] AS [d]
+WHERE [d].[Id] = @__p_0
+2026-03-01 17:45:09.002 +02:00 [INF] Executed DbCommand (89ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = DateTime2), @p2='?' (Size = 4000), @p3='?' (DbType = Date), @p4='?' (DbType = Guid), @p5='?' (DbType = Time), @p6='?' (DbType = DateTime2), @p7='?' (Size = 4000), @p8='?' (DbType = Int32), @p9='?' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [Appointments] ([Id], [CreatedAt], [CreatedBy], [Date], [DoctorId], [Hour], [ModifiedAt], [ModifiedBy], [Status], [UserId])
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9);
+2026-03-01 17:45:09.077 +02:00 [INF] Executing OkObjectResult, writing value of type 'System.String'.
+2026-03-01 17:45:09.103 +02:00 [INF] Executed action API.Controllers.AppointmentController.AddBooking (Clinic) in 2341.7507ms
+2026-03-01 17:45:09.109 +02:00 [INF] Executed endpoint 'API.Controllers.AppointmentController.AddBooking (Clinic)'
+2026-03-01 17:45:09.131 +02:00 [INF] Request finished HTTP/1.1 POST https://localhost:7089/api/Appointment/6882E4F1-DC30-4E13-E7D0-08DE70D7049D - 200 null text/plain; charset=utf-8 9803.6708ms
+2026-03-01 17:46:52.496 +02:00 [INF] Request starting HTTP/1.1 PUT https://localhost:7089/api/Appointment/cancel/5EF9154C-657B-4DA6-96BD-08DE77A98422 - null 0
+2026-03-01 17:46:52.668 +02:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2026-03-01 17:46:52.739 +02:00 [INF] AuthenticationScheme: Bearer was challenged.
+2026-03-01 17:46:52.749 +02:00 [INF] Request finished HTTP/1.1 PUT https://localhost:7089/api/Appointment/cancel/5EF9154C-657B-4DA6-96BD-08DE77A98422 - 401 0 null 271.4184ms
+2026-03-01 17:50:10.503 +02:00 [INF] User profile is available. Using 'C:\Users\Yousef_zydan\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2026-03-01 17:50:16.394 +02:00 [INF] Executed DbCommand (259ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @__normalizedName_0
+2026-03-01 17:50:17.044 +02:00 [INF] Executed DbCommand (77ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @__normalizedName_0
+2026-03-01 17:50:17.135 +02:00 [INF] Executed DbCommand (81ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @__normalizedName_0
+2026-03-01 17:50:17.234 +02:00 [INF] Executed DbCommand (75ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @__normalizedName_0
+2026-03-01 17:50:17.685 +02:00 [INF] Executed DbCommand (273ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateOfBirth], [a].[Email], [a].[EmailConfirmed], [a].[Gender], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[Name], [a].[Nickname], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[PhotoPublicId], [a].[PhotoUrl], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2026-03-01 17:50:17.985 +02:00 [INF] Executed DbCommand (78ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateOfBirth], [a].[Email], [a].[EmailConfirmed], [a].[Gender], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[Name], [a].[Nickname], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[PhotoPublicId], [a].[PhotoUrl], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2026-03-01 17:50:18.149 +02:00 [INF] Executed DbCommand (76ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateOfBirth], [a].[Email], [a].[EmailConfirmed], [a].[Gender], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[Name], [a].[Nickname], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[PhotoPublicId], [a].[PhotoUrl], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2026-03-01 17:50:18.246 +02:00 [INF] Executed DbCommand (84ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateOfBirth], [a].[Email], [a].[EmailConfirmed], [a].[Gender], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[Name], [a].[Nickname], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[PhotoPublicId], [a].[PhotoUrl], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2026-03-01 17:50:18.339 +02:00 [INF] Executed DbCommand (80ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateOfBirth], [a].[Email], [a].[EmailConfirmed], [a].[Gender], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[Name], [a].[Nickname], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[PhotoPublicId], [a].[PhotoUrl], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2026-03-01 17:50:18.424 +02:00 [INF] Executed DbCommand (75ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateOfBirth], [a].[Email], [a].[EmailConfirmed], [a].[Gender], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[Name], [a].[Nickname], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[PhotoPublicId], [a].[PhotoUrl], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2026-03-01 17:50:18.512 +02:00 [INF] Executed DbCommand (78ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateOfBirth], [a].[Email], [a].[EmailConfirmed], [a].[Gender], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[Name], [a].[Nickname], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[PhotoPublicId], [a].[PhotoUrl], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2026-03-01 17:50:18.605 +02:00 [INF] Executed DbCommand (79ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateOfBirth], [a].[Email], [a].[EmailConfirmed], [a].[Gender], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[Name], [a].[Nickname], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[PhotoPublicId], [a].[PhotoUrl], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2026-03-01 17:50:18.693 +02:00 [INF] Executed DbCommand (75ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateOfBirth], [a].[Email], [a].[EmailConfirmed], [a].[Gender], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[Name], [a].[Nickname], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[PhotoPublicId], [a].[PhotoUrl], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2026-03-01 17:50:18.832 +02:00 [INF] Executed DbCommand (74ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Categories] AS [c]) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2026-03-01 17:50:18.972 +02:00 [INF] Executed DbCommand (117ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Doctors] AS [d]) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2026-03-01 17:50:21.285 +02:00 [INF] Now listening on: https://localhost:7089
+2026-03-01 17:50:21.310 +02:00 [INF] Now listening on: http://localhost:5127
+2026-03-01 17:50:21.664 +02:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-03-01 17:50:21.697 +02:00 [INF] Hosting environment: Development
+2026-03-01 17:50:21.700 +02:00 [INF] Content root path: E:\Projects\Clinic\Clinic
+2026-03-01 17:50:27.065 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7089/_framework/aspnetcore-browser-refresh.js - null null
+2026-03-01 17:50:27.065 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7089/_vs/browserLink - null null
+2026-03-01 17:50:27.296 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7089/_framework/aspnetcore-browser-refresh.js - 200 16497 application/javascript; charset=utf-8 352.5788ms
+2026-03-01 17:50:27.951 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7089/_vs/browserLink - 200 null text/javascript; charset=UTF-8 1010.5857ms
+2026-03-01 17:50:30.234 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7089/swagger/v1/swagger.json - null null
+2026-03-01 17:50:30.577 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7089/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 344.1429ms
+2026-03-01 18:43:31.253 +02:00 [INF] User profile is available. Using 'C:\Users\Yousef_zydan\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2026-03-01 18:43:37.054 +02:00 [INF] Executed DbCommand (239ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @__normalizedName_0
+2026-03-01 18:43:37.391 +02:00 [INF] Executed DbCommand (78ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @__normalizedName_0
+2026-03-01 18:43:37.496 +02:00 [INF] Executed DbCommand (96ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @__normalizedName_0
+2026-03-01 18:43:37.768 +02:00 [INF] Executed DbCommand (114ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @__normalizedName_0
+2026-03-01 18:43:38.124 +02:00 [INF] Executed DbCommand (268ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateOfBirth], [a].[Email], [a].[EmailConfirmed], [a].[Gender], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[Name], [a].[Nickname], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[PhotoPublicId], [a].[PhotoUrl], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2026-03-01 18:43:38.712 +02:00 [INF] Executed DbCommand (378ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateOfBirth], [a].[Email], [a].[EmailConfirmed], [a].[Gender], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[Name], [a].[Nickname], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[PhotoPublicId], [a].[PhotoUrl], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2026-03-01 18:43:39.542 +02:00 [INF] Executed DbCommand (750ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateOfBirth], [a].[Email], [a].[EmailConfirmed], [a].[Gender], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[Name], [a].[Nickname], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[PhotoPublicId], [a].[PhotoUrl], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2026-03-01 18:43:39.747 +02:00 [INF] Executed DbCommand (120ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateOfBirth], [a].[Email], [a].[EmailConfirmed], [a].[Gender], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[Name], [a].[Nickname], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[PhotoPublicId], [a].[PhotoUrl], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2026-03-01 18:43:39.859 +02:00 [INF] Executed DbCommand (85ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateOfBirth], [a].[Email], [a].[EmailConfirmed], [a].[Gender], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[Name], [a].[Nickname], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[PhotoPublicId], [a].[PhotoUrl], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2026-03-01 18:43:39.983 +02:00 [INF] Executed DbCommand (84ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateOfBirth], [a].[Email], [a].[EmailConfirmed], [a].[Gender], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[Name], [a].[Nickname], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[PhotoPublicId], [a].[PhotoUrl], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2026-03-01 18:43:40.155 +02:00 [INF] Executed DbCommand (79ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateOfBirth], [a].[Email], [a].[EmailConfirmed], [a].[Gender], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[Name], [a].[Nickname], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[PhotoPublicId], [a].[PhotoUrl], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2026-03-01 18:43:40.243 +02:00 [INF] Executed DbCommand (79ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateOfBirth], [a].[Email], [a].[EmailConfirmed], [a].[Gender], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[Name], [a].[Nickname], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[PhotoPublicId], [a].[PhotoUrl], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2026-03-01 18:43:40.442 +02:00 [INF] Executed DbCommand (76ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateOfBirth], [a].[Email], [a].[EmailConfirmed], [a].[Gender], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[Name], [a].[Nickname], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[PhotoPublicId], [a].[PhotoUrl], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2026-03-01 18:43:40.693 +02:00 [INF] Executed DbCommand (82ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Categories] AS [c]) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2026-03-01 18:43:40.862 +02:00 [INF] Executed DbCommand (84ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Doctors] AS [d]) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2026-03-01 18:43:43.011 +02:00 [INF] Now listening on: https://localhost:7089
+2026-03-01 18:43:43.036 +02:00 [INF] Now listening on: http://localhost:5127
+2026-03-01 18:43:43.849 +02:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-03-01 18:43:43.945 +02:00 [INF] Hosting environment: Development
+2026-03-01 18:43:43.967 +02:00 [INF] Content root path: E:\Projects\Clinic\Clinic
+2026-03-01 18:43:45.624 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7089/_framework/aspnetcore-browser-refresh.js - null null
+2026-03-01 18:43:45.620 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7089/_vs/browserLink - null null
+2026-03-01 18:43:46.228 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7089/_framework/aspnetcore-browser-refresh.js - 200 16497 application/javascript; charset=utf-8 660.5883ms
+2026-03-01 18:43:46.827 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7089/_vs/browserLink - 200 null text/javascript; charset=UTF-8 1253.7896ms
+2026-03-01 18:43:46.959 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7089/swagger/v1/swagger.json - null null
+2026-03-01 18:43:47.327 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7089/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 368.3644ms
+2026-03-01 18:44:35.602 +02:00 [INF] Request starting HTTP/1.1 GET https://localhost:7089/api/Appointment/MyBooking?status=UpComming - null null
+2026-03-01 18:44:36.206 +02:00 [INF] Executing endpoint 'API.Controllers.AppointmentController.GetUserBookings (Clinic)'
+2026-03-01 18:44:36.333 +02:00 [INF] Route matched with {action = "GetUserBookings", controller = "Appointment"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetUserBookings(System.String) on controller API.Controllers.AppointmentController (Clinic).
+2026-03-01 18:44:36.781 +02:00 [WRN] You do not have a valid license key for the Lucky Penny software AutoMapper. This is allowed for development and testing scenarios. If you are running in production you are required to have a licensed version. Please visit https://luckypennysoftware.com to obtain a valid license.
+2026-03-01 19:06:07.446 +02:00 [INF] User profile is available. Using 'C:\Users\Yousef_zydan\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2026-03-01 19:06:24.652 +02:00 [INF] Executed DbCommand (311ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @__normalizedName_0
+2026-03-01 19:06:25.286 +02:00 [INF] Executed DbCommand (93ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @__normalizedName_0
+2026-03-01 19:06:25.436 +02:00 [INF] Executed DbCommand (77ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @__normalizedName_0
+2026-03-01 19:06:25.750 +02:00 [INF] Executed DbCommand (77ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @__normalizedName_0
+2026-03-01 19:06:26.119 +02:00 [INF] Executed DbCommand (88ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateOfBirth], [a].[Email], [a].[EmailConfirmed], [a].[Gender], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[Name], [a].[Nickname], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[PhotoPublicId], [a].[PhotoUrl], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2026-03-01 19:06:26.523 +02:00 [INF] Executed DbCommand (80ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateOfBirth], [a].[Email], [a].[EmailConfirmed], [a].[Gender], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[Name], [a].[Nickname], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[PhotoPublicId], [a].[PhotoUrl], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2026-03-01 19:06:26.731 +02:00 [INF] Executed DbCommand (78ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateOfBirth], [a].[Email], [a].[EmailConfirmed], [a].[Gender], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[Name], [a].[Nickname], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[PhotoPublicId], [a].[PhotoUrl], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2026-03-01 19:06:27.115 +02:00 [INF] Executed DbCommand (89ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateOfBirth], [a].[Email], [a].[EmailConfirmed], [a].[Gender], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[Name], [a].[Nickname], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[PhotoPublicId], [a].[PhotoUrl], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2026-03-01 19:06:27.407 +02:00 [INF] Executed DbCommand (77ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateOfBirth], [a].[Email], [a].[EmailConfirmed], [a].[Gender], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[Name], [a].[Nickname], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[PhotoPublicId], [a].[PhotoUrl], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2026-03-01 19:06:27.674 +02:00 [INF] Executed DbCommand (77ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateOfBirth], [a].[Email], [a].[EmailConfirmed], [a].[Gender], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[Name], [a].[Nickname], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[PhotoPublicId], [a].[PhotoUrl], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2026-03-01 19:06:27.896 +02:00 [INF] Executed DbCommand (86ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateOfBirth], [a].[Email], [a].[EmailConfirmed], [a].[Gender], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[Name], [a].[Nickname], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[PhotoPublicId], [a].[PhotoUrl], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2026-03-01 19:06:28.149 +02:00 [INF] Executed DbCommand (82ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateOfBirth], [a].[Email], [a].[EmailConfirmed], [a].[Gender], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[Name], [a].[Nickname], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[PhotoPublicId], [a].[PhotoUrl], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2026-03-01 19:06:28.442 +02:00 [INF] Executed DbCommand (85ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateOfBirth], [a].[Email], [a].[EmailConfirmed], [a].[Gender], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[Name], [a].[Nickname], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[PhotoPublicId], [a].[PhotoUrl], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2026-03-01 19:06:28.682 +02:00 [INF] Executed DbCommand (98ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Categories] AS [c]) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2026-03-01 19:06:29.059 +02:00 [INF] Executed DbCommand (76ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Doctors] AS [d]) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2026-03-01 19:06:32.203 +02:00 [INF] Now listening on: https://localhost:7089
+2026-03-01 19:06:32.226 +02:00 [INF] Now listening on: http://localhost:5127
+2026-03-01 19:06:33.860 +02:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-03-01 19:06:34.027 +02:00 [INF] Hosting environment: Development
+2026-03-01 19:06:34.169 +02:00 [INF] Content root path: E:\Projects\Clinic\Clinic
+2026-03-01 19:06:35.087 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7089/_framework/aspnetcore-browser-refresh.js - null null
+2026-03-01 19:06:35.086 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7089/_vs/browserLink - null null
+2026-03-01 19:06:35.233 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7089/_framework/aspnetcore-browser-refresh.js - 200 16497 application/javascript; charset=utf-8 170.0673ms
+2026-03-01 19:06:36.742 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7089/_vs/browserLink - 200 null text/javascript; charset=UTF-8 1680.7757ms
+2026-03-01 19:06:39.780 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7089/swagger/v1/swagger.json - null null
+2026-03-01 19:06:40.314 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7089/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 534.3071ms
+2026-03-01 19:19:36.554 +02:00 [INF] Request starting HTTP/1.1 GET https://localhost:7089//api/Dashboard_Doctor/my-bookings?status=UpComming - null null
+2026-03-01 19:19:37.715 +02:00 [INF] Request finished HTTP/1.1 GET https://localhost:7089//api/Dashboard_Doctor/my-bookings?status=UpComming - 404 0 null 1176.6991ms
+2026-03-01 19:19:37.753 +02:00 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET https://localhost:7089//api/Dashboard_Doctor/my-bookings, Response status code: 404
+2026-03-01 19:19:45.922 +02:00 [INF] Request starting HTTP/1.1 GET https://localhost:7089/api/Dashboard_Doctor/my-bookings?status=UpComming - null null
+2026-03-01 19:19:46.002 +02:00 [INF] Executing endpoint 'Clinic.Controllers.Dashboard.Dashboard_DoctorController.GetMyBookings (Clinic)'
+2026-03-01 19:19:46.241 +02:00 [INF] Route matched with {action = "GetMyBookings", controller = "Dashboard_Doctor"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetMyBookings(System.String) on controller Clinic.Controllers.Dashboard.Dashboard_DoctorController (Clinic).
+2026-03-01 19:19:47.101 +02:00 [WRN] You do not have a valid license key for the Lucky Penny software AutoMapper. This is allowed for development and testing scenarios. If you are running in production you are required to have a licensed version. Please visit https://luckypennysoftware.com to obtain a valid license.
+2026-03-01 19:20:03.302 +02:00 [INF] Executed DbCommand (86ms) [Parameters=[@__userId_0='?' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT [a].[Id], [a].[CreatedAt], [a].[CreatedBy], [a].[Date], [a].[DoctorId], [a].[Hour], [a].[ModifiedAt], [a].[ModifiedBy], [a].[Status], [a].[UserId]
+FROM [Appointments] AS [a]
+WHERE [a].[UserId] = @__userId_0
